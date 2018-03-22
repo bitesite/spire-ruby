@@ -37,16 +37,24 @@ end
 Below are a few usage examples. For other uses, please refer to `lib/item.rb`.
 
 Will retrieve one item from Spire
-`Spire::Item.find(itemId)`
+```ruby
+Spire::Item.find(itemId)
+```
 
 Will search Spire for an item that matches the given query
-`Spire::Item.search('GF-1234')`
+```ruby
+Spire::Item.search('GF-1234')
+```
 
 Will create a new item on Spire
-`Spire::Item.create(options)`
+```ruby
+Spire::Item.create(options)
+```
 
 Will delete an item from Spire
-`Spire::Item.find(itemId).delete`
+```ruby
+Spire::Item.find(itemId).delete
+```
 
 Updates item description on Spire
 ```ruby
