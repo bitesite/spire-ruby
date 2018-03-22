@@ -1,8 +1,5 @@
-# Spire
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/spire`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+# Spire-ruby
+spire-ruby is a Ruby wrapper around the Spire Systems API.
 
 ## Installation
 
@@ -22,7 +19,41 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First you will need to configure spire-ruby. This is a global configuration. Thus it will be applied anywhere you use spire-ruby within
+your application.
+
+If you are using spire-ruby within a Rails application, you could put the following config in an initializer.
+
+```ruby
+Spire.configure do |config|
+  config.company = 'company name'
+  config.username = 'username' # Username of a user account within "company name"
+  config.password = 'xxxxxx' # Password of that user
+  config.host = 'example.com' # Location of your Spire server
+end
+```
+
+### Items
+Below are a few usage examples. For other uses, please refer to `lib/item.rb`.
+
+Will retrieve one item from Spire
+`Spire::Item.find(itemId)`
+
+Will search Spire for an item that matches the given query
+`Spire::Item.search('GF-1234')`
+
+Will create a new item on Spire
+`Spire::Item.create(options)`
+
+Will delete an item from Spire
+`Spire::Item.find(itemId).delete`
+
+Updates item description on Spire
+```ruby
+item = Spire::Item.find(71)
+item.description = 'This is a new description'
+item.save
+```
 
 ## Development
 
