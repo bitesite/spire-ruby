@@ -320,6 +320,15 @@ module Spire
       end
     end
 
+    # Marks the current item as inactive.
+    #
+    # Note that this only updates the local object.
+    # You will need to call `save` or `update!` afterwards if
+    # you want to persist your changes to Spire.
+    def make_inactive
+      self.update_fields({status: 'I'})
+    end
+
     # Update the fields of an item.
     #
     # Supply a hash of string keyed data retrieved from the Spire API representing
