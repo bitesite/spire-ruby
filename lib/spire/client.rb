@@ -106,7 +106,7 @@ module Spire
         if path_or_class == '/inventory/items'
           Spire.const_get('Item')
         else
-          Spire.const_get(path_or_class.to_s.singularize.camelize)
+          Spire.const_get(path_or_class.to_s.singularize.camelize.gsub('::', ''))
         end
       end
 

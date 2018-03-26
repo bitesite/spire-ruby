@@ -190,7 +190,7 @@ module Spire
     }
 
     class << self
-      # Find a specific card by its id.
+      # Find a specific item by its id.
       #
       # @raise [Spire::Error] if the item could not be found.
       #
@@ -203,13 +203,12 @@ module Spire
       #
       # @raise [Spire::Error] if the item could not be found.
       #
-      # @return [Spire::item]
+      # @return [Spire::Item]
       def search(query)
         client.find_many(Spire::Item, '/inventory/items/', {q: query})
       end
 
       # Create a new item and save it on Spire.
-      # TODO: Descriptions and default values will need to be added to these
       #
       # @param [Hash] options
       # @option options [String] :whse The wharehouse where the items is located
@@ -320,15 +319,6 @@ module Spire
       end
     end
 
-    # Marks the current item as inactive.
-    #
-    # Note that this only updates the local object.
-    # You will need to call `save` or `update!` afterwards if
-    # you want to persist your changes to Spire.
-    def make_inactive
-      self.update_fields({status: 'I'})
-    end
-
     # Update the fields of an item.
     #
     # Supply a hash of string keyed data retrieved from the Spire API representing
@@ -392,6 +382,8 @@ module Spire
     #
     # @return [Spire::Item] self
     def update_fields(fields)
+
+      # instead of going through each attribute on self, iterate through each item in field and update from there
       self.attributes.each do |k, v|
         attributes[k.to_sym] = fields[SYMBOL_TO_STRING[k.to_sym]] || fields[k.to_sym] || attributes[k.to_sym]
       end
@@ -487,6 +479,20 @@ module Spire
     # @return [String] the JSON response from the Spire API
     def delete
       client.delete("/inventory/items/#{id}")
+    end
+
+    # Sets status to inactive.
+    # This will not make any changes on Spire.
+    # If you want to save changes to Spire call .save or .update!
+    def make_inactive
+      self.status = 1
+    end
+
+    # Sets status to active.
+    # This will not make any changes on Spire.
+    # If you want to save changes to Spire call .save or .update!
+    def make_active
+      self.status = 0
     end
 
     # Is the record valid?
