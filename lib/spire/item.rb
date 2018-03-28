@@ -402,7 +402,7 @@ module Spire
       # If we have an id, just update our fields.
       return update! if id
 
-      from_response client.post("/inventory/items/", {
+      options = {
         whse: whse,
         partNo: part_no,
         description: description,
@@ -417,7 +417,6 @@ module Spire
         onPurchaseQty: on_purchase_qty,
         foregroundColor: foreground_color || 0,
         backgroundColor: background_color || 16777215,
-        primaryVendor: primary_vendor,
         currentPoNo: current_po_no,
         poDueDate: po_due_date,
         reorderPoint: reorder_point,
@@ -452,7 +451,14 @@ module Spire
         defaultExpiryDate: default_expiry_date,
         lotConsumeType: lot_consume_type,
         upload: upload || false
-      })
+      }
+
+      # primaryVendor can't be any value if not present
+      if !primary_vendor.nil? || primary_vendor != {}
+        options[:primaryVendor] = primary_vendor
+      end
+
+      from_response client.post("/inventory/items/", options)
     end
 
     # Update an existing record.
