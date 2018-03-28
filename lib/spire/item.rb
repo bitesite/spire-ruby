@@ -407,7 +407,7 @@ module Spire
         partNo: part_no,
         description: description,
         type: type,
-        status: status,
+        status: status || 0,
         lotNumbered: lot_numbered || false,
         serialized: serialized || false,
         availableQty: available_qty,
