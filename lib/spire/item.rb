@@ -454,7 +454,7 @@ module Spire
       }
 
       # primaryVendor can't be any value if not present
-      if !primary_vendor.nil? || primary_vendor != {}
+      if !primary_vendor.nil? || !primary_vendor.eql?({})
         options[:primaryVendor] = primary_vendor
       end
 
