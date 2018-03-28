@@ -205,16 +205,10 @@ module Spire
         status: status || 'A',
         address: address || {}, # seems like address is required when creating a new vendor
         streetAddress: shipping_addresses || [],
-        paymentTerms: payment_terms || { code: nil, description: nil },
+        paymentTerms: payment_terms || {},
         currency: currency,
         foregroundColor: foreground_color || 0,
-        backgroundColor: background_color || 16777215,
-        createdBy: created_by,
-        modifiedBy: modified_by,
-        created: created,
-        modified: modified,
-        createdDateTime: created_date_time,
-        modifiedDateTime: modified_date_time
+        backgroundColor: background_color || 16777215
       })
     end
 
