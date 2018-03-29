@@ -40,10 +40,6 @@ module Spire
           end
         end
       end
-
-      def hex_to_decimal(hex)
-        !hex.nil ? "FF#{hex.gsub('#', '')}".to_i(16) : nil
-      end
     end
 
     def self.register_attributes(*names)
@@ -122,6 +118,10 @@ module Spire
     # Refresh the contents of our object.
     def refresh!
       self.class.find(id)
+    end
+
+    def hex_to_decimal(hex)
+      !hex.nil ? "FF#{hex.gsub('#', '')}".to_i(16) : nil
     end
 
     # Two objects are equal if their _id_ methods are equal.
