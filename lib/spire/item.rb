@@ -27,10 +27,10 @@ module Spire
   #   @return [String]
   # @!attribute [rw] on_purchase_qty
   #   @return [String]
-  # @!attribute [rw] foreground_color
-  #   @return [int]
-  # @!attribute [rw] background_color
-  #   @return [int]
+  # @!attribute [rw] foreground_color As a hexadecimal
+  #   @return [String]
+  # @!attribute [rw] background_color As a hexadecimal
+  #   @return [String]
   # @!attribute [rw] primary_vendor
   #   @return [Hash]
   # @!attribute [rw] current_po_no
@@ -130,6 +130,10 @@ module Spire
     validates_presence_of :id, :part_no, :description, :whse, :primary_vendor
 
     include HasActions
+
+    ACTIVE = 0
+    ON_HOLD = 1
+    INACTIVE = 2
 
     SYMBOL_TO_STRING = {
       id: 'id',
@@ -407,7 +411,7 @@ module Spire
         partNo: part_no,
         description: description,
         type: type,
-        status: status || 0,
+        status: status || ACTIVE,
         lotNumbered: lot_numbered || false,
         serialized: serialized || false,
         availableQty: available_qty,
@@ -415,8 +419,8 @@ module Spire
         committedQty: committed_qty,
         backorderQty: backorder_qty,
         onPurchaseQty: on_purchase_qty,
-        foregroundColor: foreground_color || 0,
-        backgroundColor: background_color || 16777215,
+        foregroundColor: hex_to_decimal(foreground_color) || hex_to_decimal("000000"),
+        backgroundColor: hex_to_decimal(background_color) || hex_to_decimal("FFFFFF"),
         currentPoNo: current_po_no,
         poDueDate: po_due_date,
         reorderPoint: reorder_point,
@@ -491,14 +495,21 @@ module Spire
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def make_inactive
-      self.status = 1
+      self.status = INACTIVE
+    end
+
+    # Sets status to on hold.
+    # This will not make any changes on Spire.
+    # If you want to save changes to Spire call .save or .update!
+    def put_on_hold
+      self.status = ON_HOLD
     end
 
     # Sets status to active.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def make_active
-      self.status = 0
+      self.status = ACTIVE
     end
 
     # Is the record valid?
