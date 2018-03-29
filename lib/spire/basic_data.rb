@@ -42,7 +42,7 @@ module Spire
       end
 
       def hex_to_decimal(hex)
-        !hex.nil ? "FF#{hex}".to_i(16) : nil
+        !hex.nil ? "FF#{hex.gsub('#', '')}".to_i(16) : nil
       end
     end
 
