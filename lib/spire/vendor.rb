@@ -206,7 +206,7 @@ module Spire
         address: address || {}, # seems like address is required when creating a new vendor
         streetAddress: shipping_addresses || [],
         paymentTerms: payment_terms || {},
-        currency: currency,
+        currency: currency || "CAD",
         foregroundColor: foreground_color || 0,
         backgroundColor: background_color || 16777215
       })
