@@ -63,7 +63,7 @@ module Spire
       hold: 'hold',
       status: 'status',
       address: 'address',
-      shipping_addresses: 'streetAddress',
+      shipping_addresses: 'shippingAddresses',
       payment_terms: 'paymentTerms',
       currency: 'currency',
       foreground_color: 'foregroundColor',
@@ -129,7 +129,7 @@ module Spire
           'hold' => options[:hold],
           'status' => options[:status],
           'address' => options[:address],
-          'streetAddress' => options[:shipping_addresses],
+          'shippingAddresses' => options[:shipping_addresses],
           'paymentTerms' => options[:payment_terms],
           'currency' => options[:currency],
           'foregroundColor' => options[:foreground_color],
@@ -198,14 +198,13 @@ module Spire
       return update! if id
 
       from_response client.post("/vendors/", {
-        partNo: part_no,
         vendorNo: vendor_no,
-        code: code,
+        code: code || vendor_no,
         name: name,
         hold: hold || false,
         status: status || 'A',
         address: address || {}, # seems like address is required when creating a new vendor
-        streetAddress: shipping_addresses || [],
+        shippingAddresses: shipping_addresses || [],
         paymentTerms: payment_terms || {},
         currency: currency || "CAD",
         foregroundColor: foreground_color || 0,
