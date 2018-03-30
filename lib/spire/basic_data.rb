@@ -58,7 +58,12 @@ module Spire
           unless options[:readonly].include?(key.to_sym)
             define_method :"#{key}=" do |val|
               send(:"#{key}_will_change!") unless val == @attributes[key]
-              @attributes[key] = val
+
+              if key == 'foreground_color' || key == 'background_color'
+                @attributes[key] = !val.nil? ? "FF#{val.gsub('#', '')}".to_i(16) : nil
+              else
+                @attributes[key] = val
+              end
             end
           end
         end
