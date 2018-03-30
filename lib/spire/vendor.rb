@@ -198,6 +198,7 @@ module Spire
       return update! if id
 
       from_response client.post("/vendors/", {
+        partNo: part_no,
         vendorNo: vendor_no,
         code: code,
         name: name,
