@@ -27,10 +27,10 @@ module Spire
   #   @return [String]
   # @!attribute [rw] on_purchase_qty
   #   @return [String]
-  # @!attribute [rw] foreground_color As a hexadecimal
-  #   @return [String]
-  # @!attribute [rw] background_color As a hexadecimal
-  #   @return [String]
+  # @!attribute [rw] foreground_color As a color decimal
+  #   @return [int]
+  # @!attribute [rw] background_color As a color decimal
+  #   @return [int]
   # @!attribute [rw] primary_vendor
   #   @return [Hash]
   # @!attribute [rw] current_po_no
@@ -419,8 +419,8 @@ module Spire
         committedQty: committed_qty,
         backorderQty: backorder_qty,
         onPurchaseQty: on_purchase_qty,
-        foregroundColor: hex_to_decimal(foreground_color) || hex_to_decimal("000000"),
-        backgroundColor: hex_to_decimal(background_color) || hex_to_decimal("FFFFFF"),
+        foregroundColor: foreground_color || 0,
+        backgroundColor: background_color || 16777215,
         currentPoNo: current_po_no,
         poDueDate: po_due_date,
         reorderPoint: reorder_point,

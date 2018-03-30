@@ -58,12 +58,7 @@ module Spire
           unless options[:readonly].include?(key.to_sym)
             define_method :"#{key}=" do |val|
               send(:"#{key}_will_change!") unless val == @attributes[key]
-
-              if key == 'foreground_color' || key == 'background_color'
-                @attributes[key] = !val.nil? ? "FF#{val.gsub('#', '')}".to_i(16) : nil
-              else
-                @attributes[key] = val
-              end
+              @attributes[key] = val
             end
           end
         end
@@ -123,10 +118,6 @@ module Spire
     # Refresh the contents of our object.
     def refresh!
       self.class.find(id)
-    end
-
-    def hex_to_decimal(hex)
-      !hex.nil? ? "FF#{hex.gsub('#', '')}".to_i(16) : nil
     end
 
     # Two objects are equal if their _id_ methods are equal.
