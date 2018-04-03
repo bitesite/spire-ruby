@@ -1,6 +1,7 @@
 require 'json'
 require 'logger'
 require 'active_model'
+require 'active_support'
 
 # Spire a Ruby wrapper around the Spire Systems API
 #

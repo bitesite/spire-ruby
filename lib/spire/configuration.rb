@@ -33,7 +33,7 @@ module Spire
     end
 
     def basic?
-      username && password
+      !username.nil? && !password.nil?
     end
 
     private

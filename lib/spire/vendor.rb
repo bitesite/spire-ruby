@@ -51,7 +51,7 @@ module Spire
         :modified_date_time
       ]
 
-    validates_presence_of :id, :vendor_no, :address
+    validates_presence_of :id, :vendor_no
 
     include HasActions
 
@@ -254,12 +254,7 @@ module Spire
 
     # Is the record valid?
     def valid?
-      vendor_no
-    end
-
-    # Find the creation date
-    def created_at
-      @created_at ||= Time.at(id[0..7].to_i(16)) rescue nil
+      !vendor_no.nil? && !name.nil?
     end
   end
 end

@@ -1,5 +1,15 @@
-require "bundler/setup"
-require "spire"
+require 'simplecov'
+
+SimpleCov.start do
+  add_filter "/spec/"
+end
+
+require 'bundler/setup'
+require 'spire'
+require 'factory_bot'
+require 'support/factory_bot'
+require 'faker'
+
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

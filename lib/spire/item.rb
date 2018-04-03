@@ -514,12 +514,7 @@ module Spire
 
     # Is the record valid?
     def valid?
-      part_no && description
-    end
-
-    # Find the creation date
-    def created_at
-      @created_at ||= Time.at(id[0..7].to_i(16)) rescue nil
+      !part_no.nil? && !description.nil?
     end
   end
 end
