@@ -9,18 +9,6 @@ module Spire
     include Spire::JsonUtils
 
     class << self
-      def path_name
-        name.split("::").last.underscore
-      end
-
-      def find(id, params = {})
-        client.find(path_name, id, params)
-      end
-
-      def create(options)
-        client.create(path_name, options)
-      end
-
       def save(options)
         new(options).tap do |basic_data|
           yield basic_data if block_given?

@@ -56,7 +56,6 @@ module Spire
         if json_error.message =~ /model not found/
           Spire.logger.error "Could not find that record."
           raise Spire::Error, "Request could not be found."
-        elsif json_error.message =~ /A JSON text must at least contain two octets/
         else
           Spire.logger.error "Unknown error."
           raise

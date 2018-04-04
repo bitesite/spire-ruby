@@ -129,8 +129,6 @@ module Spire
 
     validates_presence_of :id, :part_no, :description, :whse, :primary_vendor
 
-    include HasActions
-
     ACTIVE = 0
     ON_HOLD = 1
     INACTIVE = 2

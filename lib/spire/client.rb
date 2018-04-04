@@ -45,7 +45,7 @@ module Spire
       end
     end
 
-    # Finds given resource by path with params
+    # Finds given resources by path with params
     def find_many(spire_class, path, params = {})
       response = get(path, params)
       spire_class.parse_many response do |data|

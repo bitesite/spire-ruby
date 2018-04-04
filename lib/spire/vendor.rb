@@ -53,8 +53,6 @@ module Spire
 
     validates_presence_of :id, :vendor_no
 
-    include HasActions
-
     SYMBOL_TO_STRING = {
       id: 'id',
       vendor_no: 'vendorNo',

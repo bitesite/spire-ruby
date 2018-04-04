@@ -33,15 +33,5 @@ module Spire
         Request.new request.verb, request.uri, request.headers, request.body, request.user, request.password
       end
     end
-
-    class Clock
-      def self.timestamp; Time.now.to_i; end
-    end
-
-    class Nonce
-      def self.next
-        SecureRandom.hex()
-      end
-    end
   end
 end
