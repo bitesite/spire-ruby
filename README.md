@@ -68,6 +68,14 @@ item.description = 'This is a new description'
 item.save
 ```
 
+### Vendors
+The syntax for vendors is very similar to items. For additional information please refer to `lib/vendor.rb`.
+
+Will retrieve one vendor from Spire
+```ruby
+Spire::Vendor.find(vendorId)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
