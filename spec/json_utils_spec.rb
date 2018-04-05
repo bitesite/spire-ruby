@@ -12,9 +12,22 @@ RSpec.describe Spire::JsonUtils do
   end
 
   describe 'instance parse_json' do
+    let(:json) {JSON.generate(attributes_for(:item))}
+
     it 'returns a hash of the specified json' do
-      json = JSON.generate(attributes_for(:item))
       expect(build(:item).parse_json(json).instance_of? Hash).to eq true
+    end
+
+    it 'raises an exception if JSON.parse raises an exception' do
+      allow(JSON).to receive(:parse).and_raise(JSON::ParserError)
+      expect{build(:item).parse_json(json)}.to raise_error
+    end
+
+    it 'calls Spire.logger.error if JSON.parse raises an exception' do
+      allow(JSON).to receive(:parse).and_raise(JSON::ParserError)
+      allow(Spire.logger).to receive(:error)
+      expect{build(:item).parse_json(json)}.to raise_error
+      expect(Spire.logger).to have_received(:error).with('Unknown error.')
     end
   end
 
