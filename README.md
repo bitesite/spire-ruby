@@ -1,5 +1,10 @@
-# Spire-ruby
-spire-ruby is a Ruby wrapper around the Spire Systems API.
+# Spire
+Spire is a Ruby wrapper around the [Spire Systems API](http://www.spiresystems.com/).
+
+This gem was inspired by [ruby-trello](https://github.com/jeremytregunna/ruby-trello).
+If you like this gem, definitely go and check it out.
+
+Additionaly, we want to say thanks to [International Safety Inc.](https://www.internationalsafety.com/) for sponsoring the development of this gem.
 
 ## Installation
 
@@ -19,16 +24,16 @@ Or install it yourself as:
 
 ## Usage
 
-First you will need to configure spire-ruby. This is a global configuration. Thus it will be applied anywhere you use spire-ruby within
+First you will need to configure spire. This is a global configuration. Thus it will be applied anywhere you use spire within
 your application.
 
-If you are using spire-ruby within a Rails application, you could put the following config in an initializer.
+If you are using spire within a Rails application, you could put the following config in an initializer.
 
 ```ruby
 Spire.configure do |config|
   config.company = 'company name'
   config.username = 'username' # Username of a user account within "company name"
-  config.password = 'xxxxxx' # Password of that user
+  config.password = 'xxxxxxxx' # Password of that user
   config.host = 'example.com' # Location of your Spire server
 end
 ```
@@ -65,13 +70,16 @@ item.save
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/spire.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bitesite/spire.
+
+We do not currently support the entire [Spire](http://www.spiresystems.com/) api.
+Any pull requests adding CRUD resources to this gem are appreciated.
 
 ## License
 
