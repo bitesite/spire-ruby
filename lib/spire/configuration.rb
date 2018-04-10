@@ -15,7 +15,7 @@ module Spire
     end
 
     def initialize(attrs = {})
-      attrs[:port] = 10880 if attrs[:port].nil?
+      attrs[:port] ||= 10880
       self.attributes = attrs
     end
 

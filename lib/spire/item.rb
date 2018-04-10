@@ -201,7 +201,7 @@ module Spire
         client.find('/inventory/items', id, params)
       end
 
-      # Search for items by query.
+      # Search for items by query. This will even return inactive items!
       #
       # @raise [Spire::Error] if the item could not be found.
       #

@@ -8,6 +8,8 @@ module Spire
 
     include Spire::JsonUtils
 
+    attr_writer :client
+
     class << self
       def save(options)
         new(options).tap do |basic_data|
@@ -28,78 +30,76 @@ module Spire
           end
         end
       end
-    end
 
-    def self.register_attributes(*names)
-      options = { readonly: [] }
-      options.merge!(names.pop) if names.last.kind_of? Hash
+      def register_attributes(*names)
+        options = { readonly: [] }
+        options.merge!(names.pop) if names.last.kind_of? Hash
 
-      # Defines the attribute getter and setters.
-      class_eval do
-        define_method :attributes do
-          @attributes ||= names.reduce({}) { |hash, k| hash.merge(k.to_sym => nil) }
+        # Defines the attribute getter and setters.
+        class_eval do
+          define_method :attributes do
+            @attributes ||= names.reduce({}) { |hash, k| hash.merge(k.to_sym => nil) }
+          end
+
+          names.each do |key|
+            define_method(:"#{key}") { @attributes[key] }
+
+            unless options[:readonly].include?(key.to_sym)
+              define_method :"#{key}=" do |val|
+                send(:"#{key}_will_change!") unless val == @attributes[key]
+                @attributes[key] = val
+              end
+            end
+          end
+
+          define_attribute_methods names
         end
+      end
 
-        names.each do |key|
-          define_method(:"#{key}") { @attributes[key] }
+      def one(name, opts = {})
+        class_eval do
+          define_method(:"#{name}") do |*args|
+            options = opts.dup
+            klass   = options.delete(:via) || Spire.const_get(name.to_s.camelize)
+            ident   = options.delete(:using) || :id
+            path    = options.delete(:path)
 
-          unless options[:readonly].include?(key.to_sym)
-            define_method :"#{key}=" do |val|
-              send(:"#{key}_will_change!") unless val == @attributes[key]
-              @attributes[key] = val
+            if path
+              client.find(path, self.send(ident))
+            else
+              klass.find(self.send(ident))
             end
           end
         end
-
-        define_attribute_methods names
       end
-    end
 
-    def self.one(name, opts = {})
-      class_eval do
-        define_method(:"#{name}") do |*args|
-          options = opts.dup
-          klass   = options.delete(:via) || Spire.const_get(name.to_s.camelize)
-          ident   = options.delete(:using) || :id
-          path    = options.delete(:path)
+      def many(name, opts = {})
+        class_eval do
+          define_method(:"#{name}") do |*args|
+            options   = opts.dup
+            resource  = options.delete(:in)  || self.class.to_s.split("::").last.downcase.pluralize
+            klass     = options.delete(:via) || Spire.const_get(name.to_s.singularize.camelize)
+            path = options.delete(:path) || name
+            params    = options.merge(args[0] || {})
 
-          if path
-            client.find(path, self.send(ident))
-          else
-            klass.find(self.send(ident))
+            resources = client.find_many(klass, "/#{resource}/#{id}/#{path}", params)
+            MultiAssociation.new(self, resources).proxy
           end
         end
       end
-    end
 
-    def self.many(name, opts = {})
-      class_eval do
-        define_method(:"#{name}") do |*args|
-          options   = opts.dup
-          resource  = options.delete(:in)  || self.class.to_s.split("::").last.downcase.pluralize
-          klass     = options.delete(:via) || Spire.const_get(name.to_s.singularize.camelize)
-          path = options.delete(:path) || name
-          params    = options.merge(args[0] || {})
-
-          resources = client.find_many(klass, "/#{resource}/#{id}/#{path}", params)
-          MultiAssociation.new(self, resources).proxy
-        end
+      def client
+        Spire.client
       end
     end
 
-    def self.client
-      Spire.client
-    end
-
     register_attributes :id, readonly: [ :id ]
-
-    attr_writer :client
 
     def initialize(fields = {})
       update_fields(fields)
     end
 
-    def update_fields(fields)
+    def update_fields(_fields)
       raise NotImplementedError, "#{self.class} does not implement update_fields."
     end
 
