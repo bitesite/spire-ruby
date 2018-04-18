@@ -79,7 +79,7 @@ module Spire
 
     private
       def invoke_verb(name, uri, body = nil)
-        request = Request.new name, uri, {"Content-Type"=>"application/json"}, body
+        request = Request.new name, uri, {"Content-Type"=>"application/json; charset=UTF-8"}, body
         response = SInternet.execute auth_policy.authorize(request)
 
         return '' unless response
