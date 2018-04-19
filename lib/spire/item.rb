@@ -114,8 +114,7 @@ module Spire
 
   class Item < BasicData
     register_attributes :id, :whse, :part_no, :description, :type, :status,
-      :lot_numbered, :serialized, :available_qty, :on_hand_qty, :committed_qty,
-      :backorder_qty, :on_purchase_qty, :foreground_color, :background_color,
+      :lot_numbered, :serialized, :foreground_color, :background_color,
       :primary_vendor, :current_po_no, :po_due_date, :reorder_point, :minimum_buy_qty,
       :current_cost, :average_cost, :standard_cost, :buy_measure_code,
       :stock_measure_code, :sell_measure_code, :alternate_part_no, :accessory_whse,
@@ -125,7 +124,11 @@ module Spire
       :harmonized_code, :extended_description, :unit_of_measures, :pricing,
       :images, :default_expiry_date, :lot_consume_type, :upload, :last_modified,
       :created_by, :modified_by, :created, :modified,
-      readonly: [ :last_modified, :created_by, :modified_by, :created, :modified ]
+      readonly: [
+        :last_modified, :created_by, :modified_by, :created, :modified,
+        :available_qty, :on_hand_qty, :committed_qty, :backorder_qty,
+        :on_purchase_qty,
+      ]
 
     validates_presence_of :id, :part_no, :description, :whse, :primary_vendor
 
@@ -220,11 +223,6 @@ module Spire
       # @option options [int] :status
       # @option options [boolean] :lot_numbered
       # @option options [boolean] :serialized
-      # @option options [String] :available_qty
-      # @option options [String] :on_hand_qty
-      # @option options [String] :committed_qty
-      # @option options [String] :backorder_qty
-      # @option options [String] :on_purchase_qty
       # @option options [int] :foreground_color
       # @option options [int] :background_color
       # @option options [Hash] :primary_vendor
@@ -275,11 +273,6 @@ module Spire
           'status' => options[:status],
           'lotNumbered' => options[:lot_numbered],
           'serialized' => options[:serialized],
-          'availableQty' => options[:available_qty],
-          'onHandQty' => options[:on_hand_qty],
-          'committedQty' => options[:committed_qty],
-          'backorderQty' => options[:backorder_qty],
-          'onPurchaseQty' => options[:on_purchase_qty],
           'foregroundColor' => options[:foreground_color],
           'backgroundColor' => options[:background_color],
           'primaryVendor' => options[:primary_vendor],
@@ -339,11 +332,6 @@ module Spire
     # @option fields [int] :status
     # @option fields [boolean] :lot_numbered
     # @option fields [boolean] :serialized
-    # @option fields [String] :available_qty
-    # @option fields [String] :on_hand_qty
-    # @option fields [String] :committed_qty
-    # @option fields [String] :backorder_qty
-    # @option fields [String] :on_purchase_qty
     # @option fields [int] :foreground_color
     # @option fields [int] :background_color
     # @option fields [Hash] :primary_vendor
@@ -408,27 +396,22 @@ module Spire
         whse: whse,
         partNo: part_no,
         description: description,
-        type: type,
+        type: type || 'N',
         status: status || ACTIVE,
         lotNumbered: lot_numbered || false,
         serialized: serialized || false,
-        availableQty: available_qty,
-        onHandQty: on_hand_qty,
-        committedQty: committed_qty,
-        backorderQty: backorder_qty,
-        onPurchaseQty: on_purchase_qty,
         foregroundColor: foreground_color || 0,
         backgroundColor: background_color || 16777215,
         currentPoNo: current_po_no,
         poDueDate: po_due_date,
-        reorderPoint: reorder_point,
-        minimumBuyQty: minimum_buy_qty,
-        currentCost: current_cost,
-        averageCost: average_cost,
-        standardCost: standard_cost,
-        buyMeasureCode: buy_measure_code,
-        stockMeasureCode: stock_measure_code,
-        sellMeasureCode: sell_measure_code,
+        reorderPoint: reorder_point || '0',
+        minimumBuyQty: minimum_buy_qty || '0',
+        currentCost: current_cost || '0',
+        averageCost: average_cost || '0',
+        standardCost: standard_cost || 0,
+        buyMeasureCode: buy_measure_code || 'EA',
+        stockMeasureCode: stock_measure_code || 'EA',
+        sellMeasureCode: sell_measure_code || 'EA',
         alternatePartNo: alternate_part_no,
         accessoryWhse: accessory_whse,
         accessoryPartNo: accessory_part_no,
@@ -436,22 +419,22 @@ module Spire
         groupNo: group_no,
         salesDept: sales_dept,
         userDef1: user_def1,
-        userDef2: user_def2,
+        userDef2: user_def2 || '0',
         discountable: discountable || true,
-        weight: weight,
-        packSize: pack_size,
+        weight: weight || '0',
+        packSize: pack_size || '0',
         allowBackorders: allow_back_orders || true,
         allowReturns: allow_returns || true,
-        dutyPct: duty_pct,
-        freightPct: freight_pct,
+        dutyPct: duty_pct || '0',
+        freightPct: freight_pct || '0',
         manufactureCountry: manufacture_country,
         harmonizedCode: harmonized_code,
-        extendedDescription: extended_description,
+        extendedDescription: extended_description || '',
         unitOfMeasures: unit_of_measures || {},
         pricing: pricing || {},
         images: images  || [],
         defaultExpiryDate: default_expiry_date,
-        lotConsumeType: lot_consume_type,
+        lotConsumeType: lot_consume_type || 0,
         upload: upload || false
       }
 
