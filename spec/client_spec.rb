@@ -38,7 +38,7 @@ RSpec.describe Spire::Client do
         path = "/inventory/items/1"
         uri = URI("https://#{configuration.host}:#{configuration.port}/api/v#{Spire::API_VERSION}/companies/#{configuration.company}#{path}")
 
-        request = Spire::Request.new :get, uri, {"Content-Type"=>"application/json"}, nil, configuration.username, configuration.password
+        request = Spire::Request.new :get, uri, {"Content-Type"=>"application/json; charset=UTF-8"}, nil, configuration.username, configuration.password
 
         client.get(path)
         expect(Spire::SInternet).to have_received(:execute).with(request)
@@ -48,7 +48,7 @@ RSpec.describe Spire::Client do
         path = "/inventory/items/1"
         uri = URI("https://#{configuration.host}:#{configuration.port}/api/v#{Spire::API_VERSION}/companies/#{configuration.company}#{path}?q=af-1")
 
-        request = Spire::Request.new :get, uri, {"Content-Type"=>"application/json"}, nil, configuration.username, configuration.password
+        request = Spire::Request.new :get, uri, {"Content-Type"=>"application/json; charset=UTF-8"}, nil, configuration.username, configuration.password
 
         client.get(path, {q: 'af-1'})
         expect(Spire::SInternet).to have_received(:execute).with(request)
@@ -66,7 +66,7 @@ RSpec.describe Spire::Client do
         client.post(path, body)
         uri = URI("https://#{configuration.host}:#{configuration.port}/api/v#{Spire::API_VERSION}/companies/#{configuration.company}#{path}")
 
-        request = Spire::Request.new :post, uri, {"Content-Type"=>"application/json"}, body, configuration.username, configuration.password
+        request = Spire::Request.new :post, uri, {"Content-Type"=>"application/json; charset=UTF-8"}, body, configuration.username, configuration.password
         expect(Spire::SInternet).to have_received(:execute).with(request)
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe Spire::Client do
         client.put(path, body)
         uri = URI("https://#{configuration.host}:#{configuration.port}/api/v#{Spire::API_VERSION}/companies/#{configuration.company}#{path}")
 
-        request = Spire::Request.new :put, uri, {"Content-Type"=>"application/json"}, body, configuration.username, configuration.password
+        request = Spire::Request.new :put, uri, {"Content-Type"=>"application/json; charset=UTF-8"}, body, configuration.username, configuration.password
         expect(Spire::SInternet).to have_received(:execute).with(request)
       end
     end

@@ -8,11 +8,6 @@ FactoryBot.define do
     status 0
     lot_numbered true
     serialized true
-    available_qty {Faker::Number.between(1, 20)}
-    on_hand_qty {Faker::Number.between(1, 20)}
-    committed_qty {Faker::Number.between(1, 20)}
-    backorder_qty {Faker::Number.between(1, 20)}
-    on_purchase_qty 1
     foreground_color 0
     background_color 16777215
     primary_vendor {{
