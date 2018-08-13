@@ -68,6 +68,19 @@ item.description = 'This is a new description'
 item.save
 ```
 
+### Customers
+Below are a few usage examples. For other uses, please refer to `lib/customer.rb`.
+
+Will retrieve one customer from Spire
+```ruby
+Spire::Customer.find(customerId)
+```
+
+Will search Spire for a customer that matches the given query
+```ruby
+Spire::Customer.search('casey.li@bitesite.ca')
+```
+
 ### Vendors
 The syntax for vendors is very similar to items. For additional information please refer to `lib/vendor.rb`.
 
