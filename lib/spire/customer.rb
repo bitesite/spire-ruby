@@ -5,9 +5,11 @@ module Spire
   #   @return [int]
   # @!attribute [rw] name
   #   @return [String]
+  # @!attribute [rw] address
+  #   @return [Hash]
  
   class Customer < BasicData
-    register_attributes :name,
+    register_attributes :name, :address,
       readonly: [
         :id
       ]
@@ -16,7 +18,8 @@ module Spire
 
     SYMBOL_TO_STRING = {
       id: 'id',
-      name: 'name'
+      name: 'name',
+      address: 'address'
     }
 
     ACTIVE = 'A'
@@ -29,7 +32,7 @@ module Spire
       #
       # @return [Spire::Customer]
       def find(id, params = {})
-        client.find('/customers/', id, params)
+        client.find('/customers', id, params)
       end
 
       # Search for customers by query. This will even return inactive customers!
@@ -51,7 +54,8 @@ module Spire
       # @return [Spire::Customer]
       def create(options)
         client.create(:customer,
-          'name' => options[:name]
+          'name' => options[:name],
+          'address' => options[:address]
         )
       end
     end
@@ -92,7 +96,8 @@ module Spire
       return update! if id
 
       options = {
-        name: name
+        name: name,
+        address: address || {},
       }
 
       from_response client.post("/customers/", options)
