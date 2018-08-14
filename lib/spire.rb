@@ -22,6 +22,7 @@ module Spire
   autoload :Configuration,  'spire/configuration'
   autoload :Client,         'spire/client'
   autoload :Item,           'spire/item'
+  autoload :Customer,       'spire/customer'
   autoload :Vendor,         'spire/vendor'
   autoload :Request,        'spire/net'
   autoload :SInternet,      'spire/net'
