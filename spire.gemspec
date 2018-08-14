@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Spire is a wrapper over the Spire Systems API"
   spec.description   = "Spire is a wrapper over the Spire Systems API. It provides high level helper methods for consuming the API."
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/bitesite/spire-ruby"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
