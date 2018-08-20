@@ -11,7 +11,7 @@ module Spire
   #   @return [int]
  
   class Customer < BasicData
-    register_attributes :name, :address,
+    register_attributes :name, :address, :background_color,
       readonly: [
         :id
       ]
