@@ -9,9 +9,11 @@ module Spire
   #   @return [Hash]
   # @!attribute [rw] background_color As a color decimal
   #   @return [int]
+  # @!attribute [rw] status
+  #   @return [String]
  
   class Customer < BasicData
-    register_attributes :name, :address, :background_color,
+    register_attributes :name, :address, :background_color, :status,
       readonly: [
         :id
       ]
@@ -22,7 +24,8 @@ module Spire
       id: 'id',
       name: 'name',
       address: 'address',
-      background_color: 'backgroundColor'
+      background_color: 'backgroundColor', 
+      status: 'status'
     }
 
     ACTIVE = 'A'
@@ -59,7 +62,8 @@ module Spire
         client.create(:customer,
           'name' => options[:name],
           'address' => options[:address],
-          'backgroundColor' => options[:background_color]
+          'backgroundColor' => options[:background_color],
+          'status' => options[:status]
         )
       end
     end
@@ -102,7 +106,8 @@ module Spire
       options = {
         name: name,
         address: address || {},
-        backgroundColor: background_color || 16777215
+        backgroundColor: background_color || 16777215,
+        status: status || ACTIVE
       }
 
       from_response client.post("/customers/", options)
