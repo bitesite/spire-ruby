@@ -123,11 +123,12 @@ module Spire
       :allow_returns, :duty_pct, :freight_pct, :manufacture_country,
       :harmonized_code, :extended_description, :unit_of_measures, :pricing,
       :images, :default_expiry_date, :lot_consume_type, :upload, :last_modified,
-      :created_by, :modified_by, :created, :modified,
+      :created_by, :modified_by, :created, :modified, :available_qty, :on_hand_qty, 
+      :committed_qty, :backorder_qty, :on_purchase_qty,
       readonly: [
         :last_modified, :created_by, :modified_by, :created, :modified,
         :available_qty, :on_hand_qty, :committed_qty, :backorder_qty,
-        :on_purchase_qty,
+        :on_purchase_qty
       ]
 
     validates_presence_of :id, :part_no, :description, :whse, :primary_vendor
