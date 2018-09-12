@@ -25,7 +25,9 @@ module Spire
       name: 'name',
       address: 'address',
       background_color: 'backgroundColor', 
-      status: 'status'
+      status: 'status',
+      created_by: 'createdBy',
+      modified_by: 'modifiedBy'
     }
 
     ACTIVE = 'A'
@@ -63,7 +65,9 @@ module Spire
           'name' => options[:name],
           'address' => options[:address],
           'backgroundColor' => options[:background_color],
-          'status' => options[:status]
+          'status' => options[:status],
+          'createdBy' => options[:created_by],
+          'modifiedBy' => options[:modified_by]
         )
       end
     end
@@ -107,7 +111,9 @@ module Spire
         name: name,
         address: address || {},
         backgroundColor: background_color || 16777215,
-        status: status || ACTIVE
+        status: status || ACTIVE,
+        createdBy: created_by || '',
+        modifiedBy: modified_by || ''
       }
 
       from_response client.post("/customers/", options)
