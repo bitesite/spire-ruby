@@ -47,9 +47,16 @@ module Spire
   #   @return [String]
   # @!attribute [rw] items
   #   @return [Array]
-
-
-
+  # @!attribute [r] created
+  #   @return [String]
+  # @!attribute [r] modified
+  #   @return [String]
+  # @!attribute [rw] background_color
+  #   @return [String]
+  # @!attribute [r] created_by
+  #   @return [String]
+  # @!attribute [r] modified_by
+  #   @return [String]
 
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
@@ -151,6 +158,8 @@ module Spire
     # it just assigns the input attributes to your local object. If you use
     # this method to assign attributes, call `save` or `update!` afterwards if
     # you want to persist your changes to Spire.
+    #
+    #@param [Hash] fields
     #
 
     def update_fields(fields)
