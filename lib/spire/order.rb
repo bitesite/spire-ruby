@@ -160,7 +160,31 @@ module Spire
     # you want to persist your changes to Spire.
     #
     #@param [Hash] fields
-    #
+    # @option fields [Hash] :customer The customer object that we will pass to spire
+    # @option fields [String] :status
+    # @option fields [String] :type
+    # @option fields [Boolean] :hold
+    # @option fields [String] :order_date
+    # @option fields [Hash] :address This is the Billing Address for the customer
+    # @option fields [Hash] :shipping_address This is the shipping address, if none provided it will default to the billing address
+    # @option fields [String] :customer_po
+    # @option fields [String] :fob
+    # @option fields [String] :terms_code
+    # @option fields [String] :terms_text
+    # @option fields [String] :freight
+    # @option fields [Array] :taxes
+    # @option fields [String] :subototal
+    # @option fields [String] :subtotal_ordered
+    # @option fields [String] :discount
+    # @option fields [String] :total_discount
+    # @option fields [String] :total
+    # @option fields [String] :total_ordered
+    # @option fields [String] :gross_profit
+    # @option fields [Array] :items This will be an array of hashes, where if inventory is null and a comment option is provided, it will create a "Comment" on the order instead of a line item
+    # @option fields [String] :background_color - the sync color that we use in spire
+
+
+
 
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
