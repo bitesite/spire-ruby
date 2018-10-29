@@ -68,7 +68,7 @@ module Spire
         :created_by, :modified_by, :created, :modified, :order_no
       ]
 
-    validates_acceptance_of :id, :customer, :address, :shipping_address, :items
+    validates_presence_of :id, :customer, :address, :shipping_address, :items
 
     ACTIVE = "0"
     ON_HOLD = "1"
@@ -84,7 +84,7 @@ module Spire
       order_date: 'orderDate',
       address: 'address',
       shipping_address: 'shippingAddress',
-      customer_po: 'shippingPO',
+      customer_po: 'customerPO',
       fob: 'fob',
       terms_code: "termsCode",
       terms_text: 'termsText',
