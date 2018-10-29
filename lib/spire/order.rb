@@ -213,6 +213,7 @@ module Spire
         address: address || {},
         shippingAddress: shipping_address || {},
         items: items || {},
+        discount: discount || "0",
         backgroundColor: background_color || 16777215
       }
 
