@@ -86,7 +86,7 @@ module Spire
       shipping_address: 'shippingAddress',
       customer_po: 'customerPO',
       fob: 'fob',
-      terms_code: "termsCode",
+      terms_code: 'termsCode',
       terms_text: 'termsText',
       freight: 'freight',
       taxes: 'taxes',
@@ -155,7 +155,7 @@ module Spire
     #
     # Supply a hash of string keyed data retrieved from the Spire API representing an order.
     #
-    # Note that this this method does not save anything new to the Spire API,
+    # Note that this method does not save anything new to the Spire API,
     # it just assigns the input attributes to your local object. If you use
     # this method to assign attributes, call `save` or `update!` afterwards if
     # you want to persist your changes to Spire.
