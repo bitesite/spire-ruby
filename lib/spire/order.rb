@@ -146,6 +146,7 @@ module Spire
           'address' => options[:address],
           'shippingAddress' => options[:shipping_address],
           'items' => options[:items],
+          'discount' => options[:discount]
         )
       end
     end
