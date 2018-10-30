@@ -102,7 +102,7 @@ module Spire
 
       def class_from_path(path_or_class)
         return path_or_class if path_or_class.is_a?(Class)
-        
+
         if path_or_class == '/inventory/items'
           Spire.const_get('Item')
         elsif path_or_class == '/sales/orders'
