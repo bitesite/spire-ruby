@@ -81,6 +81,36 @@ Will search Spire for a customer that matches the given query
 Spire::Customer.search('casey.li@bitesite.ca')
 ```
 
+### Orders
+The syntax for orders is very similar to items. For additional information please refer to `lib/order.rb`.
+
+Will retrieve one order from Spire
+```ruby
+Spire::Order.find(orderId)
+```
+
+Will search Spire for any order that match the given query
+```ruby
+Spire::Order.search('casey.li@bitesite.ca')
+```
+
+Will create order in Spire   
+```ruby
+Spire::Order.create({
+  'customer' => {'id': 'customer id'},
+  'address' => { 
+    'streetAddress':'555\n BILLING ADDR street\n NO APT'
+  },
+  'shippingAddress' => { 
+    'streetAddress':'555\n SHIPPING ADDR street\n NO APT'
+  },
+  'items' => {
+    'inventory': {'id': 'inventory id'}
+  }
+})
+```
+*Above is the minimum param to create an order in Spire*
+
 ### Vendors
 The syntax for vendors is very similar to items. For additional information please refer to `lib/vendor.rb`.
 
