@@ -119,5 +119,4 @@ RSpec.describe Spire::Order do
       expect(order).to have_received(:update!)
     end
   end
-  
 end
