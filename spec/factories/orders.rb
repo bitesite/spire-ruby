@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :order, class: Spire::Order do
     sequence(:id) {|n| n}
-    order_no {Faker::Number.number(5)}
     customer {{"id"=>Faker::Number.number(5)}}
     address {{"streetAddress"=>Faker::Address.full_address()}}
     shipping_address {{"streetAddress"=>Faker::Address.full_address()}}
@@ -34,9 +33,5 @@ FactoryBot.define do
     total {Faker::Commerce.price()}
     total_ordered {Faker::Commerce.price()}
     gross_profit 0
-    created_by {Faker::Name.initials()}
-    modified_by {Faker::Name.initials()}
-    created {Faker::Time.backward(1)}
-    modified {Faker::Time.forward(1)}
   end
 end
