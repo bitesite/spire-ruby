@@ -28,6 +28,7 @@ module Spire
   autoload :SInternet,      'spire/net'
   autoload :BasicData,      'spire/basic_data'
   autoload :JsonUtils,      'spire/json_utils'
+  autoload :Order,          'spire/order'
 
   module Authorization
     autoload :AuthPolicy,      'spire/authorization'
