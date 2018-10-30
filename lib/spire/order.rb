@@ -130,6 +130,10 @@ module Spire
       # @option options [Hash] :address this is the billing address for the customer
       # @option options [Hash] :shipping_address this is the shipping address that the order will be sent to (defaults to the billing address if none provided)
       # @option options [Array] :items this is an array of hashes that will accept an inventory item that will have a hash example input from the web client: items: [ { "inventory": {"id": 123} } ]
+      # @option options [String] :discount this is the discount percentage for that order
+      # @option options [String] :freight this is the shipping cost for that order
+      # @option options [String] :customerPO this is the purchase order number for internal use
+      # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
       # this array can also accept a desctiption and comment object that will create a comment on the order itself ex: items: [{"description":"MAKE COMMENT THRU API","comment":"MAKE COMMENT THRU API"}]
 
       # @raise [Spire::Error] if the order could not be created.
@@ -142,7 +146,10 @@ module Spire
           'address' => options[:address],
           'shippingAddress' => options[:shipping_address],
           'items' => options[:items],
-          'discount' => options[:discount]
+          'discount' => options[:discount],
+          'freight' => options[:freight],
+          'customerPO' => options[:customer_po],
+          'type' => options[:type]
         )
       end
     end
@@ -173,6 +180,9 @@ module Spire
     # @option fields [String] :subototal
     # @option fields [String] :subtotal_ordered
     # @option fields [String] :discount
+    # @option options [String] :freight
+    # @option options [String] :customerPO
+    # @option options [String] :type
     # @option fields [String] :total_discount
     # @option fields [String] :total
     # @option fields [String] :total_ordered
@@ -205,6 +215,9 @@ module Spire
         shippingAddress: shipping_address || {},
         items: items || {},
         discount: discount || "0",
+        freight: freight || "",
+        customerPO: customer_po || "",
+        type: type || "O",
         backgroundColor: background_color || 16777215
       }
 
