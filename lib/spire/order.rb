@@ -270,7 +270,7 @@ module Spire
 
     # Is the record valid?
     def valid?
-      !order_no.nil? && !items.nil? && !customer.nil?
+      !items.nil? && !customer.nil?
     end
   end
 end
