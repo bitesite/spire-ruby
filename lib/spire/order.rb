@@ -57,7 +57,6 @@ module Spire
   #   @return [String]
   # @!attribute [r] modified_by
   #   @return [String]
-
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
@@ -106,12 +105,11 @@ module Spire
     }
 
     class << self
-       # Find a specific order by its id.
+      # Find a specific order by its id.
       #
       # @raise [Spire::Error] if the order could not be found.
       #
       # @return [Spire::Order]
-
       def find(id, params = {})
         client.find('/sales/orders', id, params)
       end
@@ -121,7 +119,6 @@ module Spire
       # @raise [Spire::Error] if the order could not be found.
       #
       # @return [Spire::Order]
-
       def search(query)
         client.find_many(Spire::Order, '/sales/orders/', {q: query})
       end
@@ -138,7 +135,6 @@ module Spire
       # @raise [Spire::Error] if the order could not be created.
       #
       # @return [Spire::Order]
-
       def create(options)
         client.create(
           :order,
@@ -183,10 +179,6 @@ module Spire
     # @option fields [String] :gross_profit
     # @option fields [Array] :items This will be an array of hashes, where if inventory is null and a comment option is provided, it will create a "Comment" on the order instead of a line item
     # @option fields [String] :background_color - the sync color that we use in spire
-
-
-
-
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
       self.attributes.each do |k, v|
@@ -203,7 +195,6 @@ module Spire
     #
     # @return [String] The JSON representation of the saved order returned by
     #     the Spire API.
-
     def save
       # If we have an id, just update our fields
       return update! if id
@@ -230,7 +221,6 @@ module Spire
     #
     # @return [String] The JSON representation of the updated order returned by
     # the Spire API.
-
     def update!
       @previously_changed = changes
       # extract only new values to build payload
