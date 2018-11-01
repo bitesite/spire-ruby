@@ -98,15 +98,36 @@ Will create order in Spire
 ```ruby
 Spire::Order.create({
   'customer' => {'id': 'customer id'},
-  'address' => { 
-    'streetAddress':'555\n BILLING ADDR street\n NO APT'
+  'address': {
+    'line1':'123 ABC Street',
+    'line2':' Unit #',
+    'line3':'Attention: Accounts Payable',
+    'line4':'Special Instructions?',
+    'city':'Toronto',
+    'postalCode':'A1A2B2',
+    'provState':'ON',
+    'country':'CAN',
   },
-  'shippingAddress' => { 
-    'streetAddress':'555\n SHIPPING ADDR street\n NO APT'
+  'shippingAddress': {
+    'line1':'456 HIJ Dr.',
+    'line2':' Unit #',
+    'line3':'Attention: SomeOne',
+    'line4':'Delivery Instructions?',
+    'city':'Toronto',
+    'postalCode':'A1A2B2',
+    'provState':'ON',
+    'country':'CAN',
   },
-  'items' => {
-    'inventory': {'id': 'inventory id'}
-  }
+  'items': [
+    { 'inventory': { 'id': 93 }, 'orderQty': '2' },
+    { 'inventory': { 'id': 2279 } },
+    {
+      'description': 'MAKE COMMENT THRU API',
+      'comment': 'MAKE COMMENT THRU API'
+    }
+  ],
+  'discount': '4',
+  'freight': '14'
 })
 ```
 *Above is the minimum param to create an order in Spire*
