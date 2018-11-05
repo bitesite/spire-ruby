@@ -73,7 +73,7 @@ module Spire
     ACTIVE = false
     ON_HOLD = true
 
-    #Statuses
+    #Statuses - These are to track the flow of the order throughout its lifespan
     OPEN = "O"
     PROCESSED = "P"
     DEPOSITED = "L"
@@ -224,6 +224,7 @@ module Spire
         freight: freight || "",
         customerPO: customer_po || "",
         type: type || "O",
+        hold: hold || ACTIVE,
         backgroundColor: background_color || 16777215
       }
 
@@ -256,25 +257,18 @@ module Spire
       client.delete("/sales/orders/#{id}")
     end
 
-    # Sets status to inactive.
-    # This will not make any changes on Spire.
-    # If you want to save changes to Spire call .save or .update!
-    def make_inactive
-      self.status = INACTIVE
-    end
-
     # Sets status to on hold.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def put_on_hold
-      self.status = ON_HOLD
+      self.hold = ON_HOLD
     end
 
     # Sets status to active.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def make_active
-      self.status = ACTIVE
+      self.hold = ACTIVE
     end
 
     # Is the record valid?
