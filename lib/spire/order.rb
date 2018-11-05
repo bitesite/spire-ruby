@@ -69,9 +69,15 @@ module Spire
 
     validates_presence_of :id, :customer, :address, :shipping_address, :items
 
-    ACTIVE = "0"
-    ON_HOLD = "1"
-    INACTIVE = "2"
+    # Canceling an order on Web is the HOLD function in the spire client
+    ACTIVE = false
+    ON_HOLD = true
+
+    #Statuses
+    OPEN = "O"
+    PROCESSED = "P"
+    DEPOSITED = "L"
+
 
     SYMBOL_TO_STRING = {
       id: 'id',
