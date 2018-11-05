@@ -69,9 +69,15 @@ module Spire
 
     validates_presence_of :id, :customer, :address, :shipping_address, :items
 
-    ACTIVE = "0"
-    ON_HOLD = "1"
-    INACTIVE = "2"
+    # Canceling an order on Web is the HOLD function in the spire client
+    ACTIVE = false
+    ON_HOLD = true
+
+    #Statuses - These are to track the flow of the order throughout its lifespan
+    OPEN = "O"
+    PROCESSED = "P"
+    DEPOSITED = "L"
+
 
     SYMBOL_TO_STRING = {
       id: 'id',
@@ -218,6 +224,7 @@ module Spire
         freight: freight || "",
         customerPO: customer_po || "",
         type: type || "O",
+        hold: hold || ACTIVE,
         backgroundColor: background_color || 16777215
       }
 
@@ -250,25 +257,18 @@ module Spire
       client.delete("/sales/orders/#{id}")
     end
 
-    # Sets status to inactive.
-    # This will not make any changes on Spire.
-    # If you want to save changes to Spire call .save or .update!
-    def make_inactive
-      self.status = INACTIVE
-    end
-
     # Sets status to on hold.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def put_on_hold
-      self.status = ON_HOLD
+      self.hold = ON_HOLD
     end
 
     # Sets status to active.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def make_active
-      self.status = ACTIVE
+      self.hold = ACTIVE
     end
 
     # Is the record valid?
