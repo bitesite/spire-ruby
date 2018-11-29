@@ -107,6 +107,8 @@ module Spire
           Spire.const_get('Item')
         elsif path_or_class == '/sales/orders'
           Spire.const_get('Order')
+        elsif path_or_class == '/inventory/upcs'
+          Spire.const_get('Upc')
         else
           Spire.const_get(path_or_class.to_s.singularize.camelize.gsub('::', ''))
         end

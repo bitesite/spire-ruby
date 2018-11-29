@@ -68,6 +68,31 @@ item.description = 'This is a new description'
 item.save
 ```
 
+### UPCs
+Below are a few usage examples. For other uses, please refer to `lib/upc.rb`.
+
+Will retrieve one UPC from Spire
+```ruby
+Spire::Upc.find(upcId)
+```
+
+Will create a new UPC on Spire
+```ruby
+Spire::Upc.create(upc: "12345678901", uomCode: "EA", inventory: {id: 1})
+```
+
+Will delete a UPC from Spire
+```ruby
+Spire::Item.find(upcId).delete
+```
+
+Updates a UPC on Spire
+```ruby
+upc = Spire::Upc.find(1)
+upc.upc = '12345678902'
+upc.save
+```
+
 ### Customers
 Below are a few usage examples. For other uses, please refer to `lib/customer.rb`.
 
