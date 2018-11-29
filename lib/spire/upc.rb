@@ -155,7 +155,7 @@ module Spire
 
     # Is the record valid?
     def valid?
-      !uomCode.nil? && !inventory.nil? && !upc.nil?
+      !uom_code.nil? && !inventory.nil? && !upc.nil?
     end
   end
 end
