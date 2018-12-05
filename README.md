@@ -88,7 +88,7 @@ Spire::Upc.create(upc: "12345678901", uomCode: "EA", inventory: {id: 1})
 
 Will delete a UPC from Spire
 ```ruby
-Spire::Item.find(upcId).delete
+Spire::Upc.find(upcId).delete
 ```
 
 Updates a UPC on Spire
