@@ -62,6 +62,15 @@ module Spire
         client.find_many(Spire::Upc, '/inventory/upcs/', {q: query})
       end
 
+      # Find upcs and filter. This will even return inactive upcs!
+      #
+      # @raise [Spire::Error] if the item could not be found.
+      #
+      # @ return [Spire::Upc]
+      def filter(filter)
+        client.find_many(Spire::Upc, '/inventory/upcs/', {filter: filter})
+      end
+
       # Create a new item and save it on Spire.
       #
       # @param [Hash] options
