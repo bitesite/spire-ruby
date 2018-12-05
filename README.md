@@ -71,6 +71,11 @@ item.save
 ### UPCs
 Below are a few usage examples. For other uses, please refer to `lib/upc.rb`.
 
+Will retrieve many UPCs based on a filter from Spire
+```ruby
+Spire::Upc.filter('{"partNo":"ABCD-0001", "whse":"00"}')
+```
+
 Will retrieve one UPC from Spire
 ```ruby
 Spire::Upc.find(upcId)

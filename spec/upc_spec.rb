@@ -22,6 +22,17 @@ RSpec.describe Spire::Upc do
     end
   end
 
+  describe 'filter' do
+    it 'calls client.find_many' do
+      allow(Spire::BasicData.client).to receive(:find_many)
+      Spire::Upc.filter('{"partNo":"ABCD-0001", "whse":"00"}')
+
+      expect(Spire::BasicData.client).to have_received(
+        :find_many
+      ).with(Spire::Upc, '/inventory/upcs/', {filter: '{"partNo":"ABCD-0001", "whse":"00"}'})
+    end
+  end
+
   describe 'create' do
     it 'calls client.create' do
       allow(Spire::BasicData.client).to receive(:create)
