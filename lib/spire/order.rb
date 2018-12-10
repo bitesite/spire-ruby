@@ -207,6 +207,7 @@ module Spire
     # @option fields [Array] :items This will be an array of hashes, where if inventory is null and a comment option is provided, it will create a "Comment" on the order instead of a line item
     # @option fields [String] :background_color - the sync color that we use in spire
     #options fields [Array] :payments - accepts simple payment method code id, which denotes payment type, used for marking payment deposited.
+    # @option fields [Hash] :contact
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
       self.attributes.each do |k, v|
@@ -238,6 +239,7 @@ module Spire
         type: type || "O",
         hold: hold || ACTIVE,
         payments: payments || [],
+        contact: contact || {},
         status: status || OPEN,
         backgroundColor: background_color || 16777215
       }
