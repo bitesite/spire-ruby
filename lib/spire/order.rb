@@ -231,6 +231,7 @@ module Spire
         type: type || "O",
         hold: hold || ACTIVE,
         payments: payments || [],
+        status: status || OPEN,
         backgroundColor: background_color || 16777215
       }
 
@@ -275,6 +276,10 @@ module Spire
     # If you want to save changes to Spire call .save or .update!
     def make_active
       self.hold = ACTIVE
+    end
+
+    def mark_deposited
+      self.status = PROCESSED
     end
 
     # Is the record valid?
