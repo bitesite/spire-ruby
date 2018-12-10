@@ -49,6 +49,8 @@ module Spire
   #   @return [Array]
   # @!attribute [rw] payments
   #   @return [Array]
+  # @!attribute [rw] contact
+  #   @return [Hash]
   # @!attribute [r] created
   #   @return [String]
   # @!attribute [r] modified
@@ -63,7 +65,7 @@ module Spire
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
-      :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :created_by,
+      :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color,
       readonly: [
         :created_by, :modified_by, :created, :modified, :order_no
