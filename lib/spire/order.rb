@@ -108,6 +108,7 @@ module Spire
       gross_profit: 'grossProfit',
       items: 'items',
       payments: 'payments',
+      contact: 'contact',
       created_by: 'createdBy',
       modified_by: 'modifiedBy',
       created: 'created',
