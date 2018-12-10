@@ -144,6 +144,7 @@ module Spire
       # @option options [String] :freight this is the shipping cost for that order
       # @option options [String] :customerPO this is the purchase order number for internal use
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
+      # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
 
       # @raise [Spire::Error] if the order could not be created.
       #
