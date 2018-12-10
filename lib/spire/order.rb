@@ -152,6 +152,7 @@ module Spire
         client.create(
           :order,
           'customer' => options[:customer],
+          'status' => options[:status]
           'address' => options[:address],
           'shippingAddress' => options[:shipping_address],
           'items' => options[:items],
