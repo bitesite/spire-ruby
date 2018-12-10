@@ -148,6 +148,7 @@ module Spire
       # @option options [String] :customerPO this is the purchase order number for internal use
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
       # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
+      # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
 
       # @raise [Spire::Error] if the order could not be created.
       #
@@ -164,6 +165,7 @@ module Spire
           'freight' => options[:freight],
           'customerPO' => options[:customer_po],
           'type' => options[:type],
+          'contact' => optionsp[:contact],
           'payments' => options[:payments]
         )
       end
