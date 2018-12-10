@@ -165,7 +165,7 @@ module Spire
           'freight' => options[:freight],
           'customerPO' => options[:customer_po],
           'type' => options[:type],
-          'contact' => optionsp[:contact],
+          'contact' => options[:contact],
           'payments' => options[:payments]
         )
       end
