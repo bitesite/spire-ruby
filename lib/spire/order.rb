@@ -144,6 +144,7 @@ module Spire
       # @option options [Array] :items this is an array of hashes that will accept an inventory item that will have a hash example input from the web client: items: [ { "inventory": {"id": 123} } ]
       # this array can also accept a desctiption and comment object that will create a comment on the order itself ex: items: [{"description":"MAKE COMMENT THRU API","comment":"MAKE COMMENT THRU API"}]
       # @option options [String] :discount this is the discount percentage for that order
+      # @option options [String] :terms_code used to prepare the order for the deposit by marking the order with the appropriate pre-payment method used
       # @option options [String] :freight this is the shipping cost for that order
       # @option options [String] :customerPO this is the purchase order number for internal use
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
@@ -158,6 +159,7 @@ module Spire
           :order,
           'customer' => options[:customer],
           'status' => options[:status],
+          'termsCode' => options[:terms_code],
           'address' => options[:address],
           'shippingAddress' => options[:shipping_address],
           'items' => options[:items],
