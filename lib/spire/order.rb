@@ -239,6 +239,7 @@ module Spire
         freight: freight || "",
         customerPO: customer_po || "",
         type: type || "O",
+        termsCode: terms_code || "",
         hold: hold || ACTIVE,
         payments: payments || [],
         contact: contact || {},
