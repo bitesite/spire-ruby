@@ -291,7 +291,7 @@ module Spire
     end
 
     # Deposited is only used for pre-paid orders IE: Credit Card/Debit
-    def mark_deposited
+    def mark_as_deposited
       self.status = DEPOSITED
     end
 

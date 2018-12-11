@@ -78,9 +78,9 @@ RSpec.describe Spire::Order do
     end
   end
 
-  describe 'mark_deposited' do
+  describe 'mark_as_deposited' do
     it 'sets the status to deposited (L)' do
-      order.mark_deposited
+      order.mark_as_deposited
       expect(order.status).to eq "L"
     end
   end
