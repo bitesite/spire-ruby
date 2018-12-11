@@ -290,7 +290,13 @@ module Spire
       self.hold = ACTIVE
     end
 
+    # Deposited is only used for pre-paid orders IE: Credit Card/Debit
     def mark_deposited
+      self.status = DEPOSITED
+    end
+
+    #  After order is deposited and ready to ship we can mark it as processed.
+    def mark_as_processed
       self.status = PROCESSED
     end
 
