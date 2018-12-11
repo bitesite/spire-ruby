@@ -47,6 +47,10 @@ module Spire
   #   @return [String]
   # @!attribute [rw] items
   #   @return [Array]
+  # @!attribute [rw] payments
+  #   @return [Array]
+  # @!attribute [rw] contact
+  #   @return [Hash]
   # @!attribute [r] created
   #   @return [String]
   # @!attribute [r] modified
@@ -61,7 +65,7 @@ module Spire
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
-      :total_discount, :total, :total_ordered, :gross_profit, :items, :created_by,
+      :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color,
       readonly: [
         :created_by, :modified_by, :created, :modified, :order_no
@@ -103,6 +107,8 @@ module Spire
       total_ordered: 'totalOrdered',
       gross_profit: 'grossProfit',
       items: 'items',
+      payments: 'payments',
+      contact: 'contact',
       created_by: 'createdBy',
       modified_by: 'modifiedBy',
       created: 'created',
@@ -136,11 +142,14 @@ module Spire
       # @option options [Hash] :address this is the billing address for the customer
       # @option options [Hash] :shipping_address this is the shipping address that the order will be sent to (defaults to the billing address if none provided)
       # @option options [Array] :items this is an array of hashes that will accept an inventory item that will have a hash example input from the web client: items: [ { "inventory": {"id": 123} } ]
+      # this array can also accept a desctiption and comment object that will create a comment on the order itself ex: items: [{"description":"MAKE COMMENT THRU API","comment":"MAKE COMMENT THRU API"}]
       # @option options [String] :discount this is the discount percentage for that order
+      # @option options [String] :terms_code used to prepare the order for the deposit by marking the order with the appropriate pre-payment method used
       # @option options [String] :freight this is the shipping cost for that order
       # @option options [String] :customerPO this is the purchase order number for internal use
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
-      # this array can also accept a desctiption and comment object that will create a comment on the order itself ex: items: [{"description":"MAKE COMMENT THRU API","comment":"MAKE COMMENT THRU API"}]
+      # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
+      # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
 
       # @raise [Spire::Error] if the order could not be created.
       #
@@ -149,13 +158,17 @@ module Spire
         client.create(
           :order,
           'customer' => options[:customer],
+          'status' => options[:status],
+          'termsCode' => options[:terms_code],
           'address' => options[:address],
           'shippingAddress' => options[:shipping_address],
           'items' => options[:items],
           'discount' => options[:discount],
           'freight' => options[:freight],
           'customerPO' => options[:customer_po],
-          'type' => options[:type]
+          'type' => options[:type],
+          'contact' => options[:contact],
+          'payments' => options[:payments]
         )
       end
     end
@@ -195,6 +208,8 @@ module Spire
     # @option fields [String] :gross_profit
     # @option fields [Array] :items This will be an array of hashes, where if inventory is null and a comment option is provided, it will create a "Comment" on the order instead of a line item
     # @option fields [String] :background_color - the sync color that we use in spire
+    #options fields [Array] :payments - accepts simple payment method code id, which denotes payment type, used for marking payment deposited.
+    # @option fields [Hash] :contact
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
       self.attributes.each do |k, v|
@@ -224,7 +239,11 @@ module Spire
         freight: freight || "",
         customerPO: customer_po || "",
         type: type || "O",
+        termsCode: terms_code || "",
         hold: hold || ACTIVE,
+        payments: payments || [],
+        contact: contact || {},
+        status: status || OPEN,
         backgroundColor: background_color || 16777215
       }
 
@@ -269,6 +288,16 @@ module Spire
     # If you want to save changes to Spire call .save or .update!
     def make_active
       self.hold = ACTIVE
+    end
+
+    # Deposited is only used for pre-paid orders IE: Credit Card/Debit
+    def mark_as_deposited
+      self.status = DEPOSITED
+    end
+
+    #  After order is deposited and ready to ship we can mark it as processed.
+    def mark_as_processed
+      self.status = PROCESSED
     end
 
     # Is the record valid?
