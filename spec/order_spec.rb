@@ -23,7 +23,7 @@ RSpec.describe Spire::Order do
   end
 
   describe 'create' do
-    it 'calls client.create' do 
+    it 'calls client.create' do
       allow(Spire::BasicData.client).to receive(:create)
       Spire::Order.create(attributes_for(:order))
       expect(Spire::BasicData.client).to have_received(:create)
@@ -39,7 +39,7 @@ RSpec.describe Spire::Order do
   end
 
   describe 'valid?' do
-    before (:each) do 
+    before (:each) do
       #assume order_no is not nil
       order = build(:order)
     end
@@ -75,6 +75,20 @@ RSpec.describe Spire::Order do
     it 'sets status to 1' do
       order.put_on_hold
       expect(order.status).to eq "1"
+    end
+  end
+
+  describe 'mark_deposited' do
+    it 'sets the status to deposited (L)' do
+      order.mark_deposited
+      expect(order.status).to eq "L"
+    end
+  end
+
+  describe 'mark_as_processed' do
+    it 'sets the status to processed (P)' do
+      order.mark_as_processed
+      expect(order.status).to eq "P"
     end
   end
 
