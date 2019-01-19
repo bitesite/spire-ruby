@@ -118,26 +118,7 @@ module Spire
           'name' => options[:name],
           'address' => options[:address],
           'backgroundColor' => options[:background_color],
-          'customerNo' => options[:customer_no],
           'status' => options[:status],
-          'code' => options[:code],
-          'hold' => options[:hold],
-          'status' => options[:status],
-          'reference' => options[:reference],
-          'applyFinanceCharges' => options[:apply_finance_charges],
-          'foregroundColor' => options[:foreground_color],
-          'backgroundColor' => options[:background_color],
-          'creditType' => options[:credit_type],
-          'creditLimit' => options[:credit_limit],
-          'creditBalance' => options[:credit_balance],
-          'currency' => options[:currency],
-          'defaultShipTo' => options[:default_ship_to],
-          'userDef1' => options[:user_def_1],
-          'userDef2' => options[:user_def_2],
-          'discount' => options[:discount],
-          'receivableAccount' => options[:receivable_account],
-          'upload' => options[:upload],
-          'address' => options[:address],
           'createdBy' => options[:created_by],
           'modifiedBy' => options[:modified_by]
         )
@@ -179,43 +160,33 @@ module Spire
       # If we have an id, just update our fields.
       return update! if id
 
-
       options = {
-              name: name,
-              address: address || {},
-              backgroundColor: background_color || 16777215,
-              status: status || ACTIVE,
-              createdBy: created_by || '',
-              modifiedBy: modified_by || ''
-            }
+        # code: code || 'ABCDEF2', must be unique if apply
+        name: name,
+        status: status || ACTIVE,
+        backgroundColor: background_color || 16777215,
+        address: address || {},
+        createdBy: created_by || '',
+        modifiedBy: modified_by,
+        hold: hold || false,
+        applyFinanceCharges: apply_finance_charges || false,
+        foregroundColor: foreground_color || 00000000,
+        creditType: credit_type || 2,
+        creditLimit: credit_limit || '0',
+        creditBalance: credit_balance || '0',
+        currency: currency || 'CAD',
+        defaultShipTo: default_ship_to || '',
+        receivableAccount: receivable_account || '11210',
+        upload: upload || false,
+        reference: reference || '',
+        userDef1: user_def_1 || '',
+        userDef2: user_def_2 || '',
+        discount: discount || '0',
+      }
 
-      # options = {
-      #   name: name,
-      #   code: code || '',
-      #   hold: hold || false,
-      #   status: status || ACTIVE,
-      #   reference: reference || '',
-      #   applyFinanceCharges: apply_finance_charges || false,
-      #   foregroundColor: foreground_color || '',
-      #   backgroundColor: background_color || 16777215,
-      #   creditType: credit_type || '',
-      #   creditLimit: credit_limit || '',
-      #   creditBalance: credit_balance || '',
-      #   currency: currency || '',
-      #   defaultShipTo: default_ship_to || '',
-      #   userDef1: user_def_1 || '',
-      #   userDef2: user_def_2 || '',
-      #   discount: discount || '',
-      #   receivableAccount: receivable_account || '',
-      #   upload: upload || false,
-      #   address: address || {},
-      #   createdBy: created_by || '',
-      #   modifiedBy: modified_by
-      # }
-
-      # if customer_no.present?
-      #   options[:customerNo] = customer_no
-      # end
+      if customer_no.present?
+        options[:customerNo] = customer_no # Without customer no., above attribuites can sync properly
+      end
 
       from_response client.post("/customers/", options)
     end
