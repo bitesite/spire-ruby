@@ -116,7 +116,10 @@ module Spire
       def create(options)
         client.create(:customer,
           'name' => options[:name],
+          'address' => options[:address],
+          'backgroundColor' => options[:background_color],
           'customerNo' => options[:customer_no],
+          'status' => options[:status],
           'code' => options[:code],
           'hold' => options[:hold],
           'status' => options[:status],
@@ -134,7 +137,9 @@ module Spire
           'discount' => options[:discount],
           'receivableAccount' => options[:receivable_account],
           'upload' => options[:upload],
-          'address' => options[:address]
+          'address' => options[:address],
+          'createdBy' => options[:created_by],
+          'modifiedBy' => options[:modified_by]
         )
       end
     end
@@ -174,30 +179,43 @@ module Spire
       # If we have an id, just update our fields.
       return update! if id
 
+
       options = {
-        name: name,
-        customerNo: customer_no || '',
-        code: code || '',
-        hold: hold || false,
-        status: status || ACTIVE,
-        reference: reference || '',
-        applyFinanceCharges: apply_finance_charges || false,
-        foregroundColor: foreground_color || '',
-        backgroundColor: background_color || 16777215,
-        creditType: credit_type || '',
-        creditLimit: credit_limit || '',
-        creditBalance: credit_balance || '',
-        currency: currency || '',
-        defaultShipTo: default_ship_to || '',
-        userDef1: user_def_1 || '',
-        userDef2: user_def_2 || '',
-        discount: discount || '',
-        receivableAccount: receivable_account || '',
-        upload: upload || false,
-        address: address || {},
-        createdBy: created_by || '',
-        modifiedBy: modified_by
-      }
+              name: name,
+              address: address || {},
+              backgroundColor: background_color || 16777215,
+              status: status || ACTIVE,
+              createdBy: created_by || '',
+              modifiedBy: modified_by || ''
+            }
+
+      # options = {
+      #   name: name,
+      #   code: code || '',
+      #   hold: hold || false,
+      #   status: status || ACTIVE,
+      #   reference: reference || '',
+      #   applyFinanceCharges: apply_finance_charges || false,
+      #   foregroundColor: foreground_color || '',
+      #   backgroundColor: background_color || 16777215,
+      #   creditType: credit_type || '',
+      #   creditLimit: credit_limit || '',
+      #   creditBalance: credit_balance || '',
+      #   currency: currency || '',
+      #   defaultShipTo: default_ship_to || '',
+      #   userDef1: user_def_1 || '',
+      #   userDef2: user_def_2 || '',
+      #   discount: discount || '',
+      #   receivableAccount: receivable_account || '',
+      #   upload: upload || false,
+      #   address: address || {},
+      #   createdBy: created_by || '',
+      #   modifiedBy: modified_by
+      # }
+
+      # if customer_no.present?
+      #   options[:customerNo] = customer_no
+      # end
 
       from_response client.post("/customers/", options)
     end
