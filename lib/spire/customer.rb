@@ -161,7 +161,8 @@ module Spire
       return update! if id
 
       options = {
-        # code: code || 'ABCDEF2', must be unique if apply
+        code: code || 'XXXXXXX', # must be unique
+        customerNo: customer_no || 'XXXXXXX', # must be unique
         name: name,
         status: status || ACTIVE,
         backgroundColor: background_color || 16777215,
@@ -183,10 +184,6 @@ module Spire
         userDef2: user_def_2 || '',
         discount: discount || '0',
       }
-
-      if customer_no.present?
-        options[:customerNo] = customer_no # Without customer no., above attribuites can sync properly
-      end
 
       from_response client.post("/customers/", options)
     end
