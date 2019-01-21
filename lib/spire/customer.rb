@@ -116,9 +116,25 @@ module Spire
       def create(options)
         client.create(:customer,
           'name' => options[:name],
-          'address' => options[:address],
-          'backgroundColor' => options[:background_color],
+          'customerNo' => options[:customer_no],
+          'code' => options[:code],
+          'hold' => options[:hold],
           'status' => options[:status],
+          'reference' => options[:reference],
+          'applyFinanceCharges' => options[:apply_finance_charges],
+          'foregroundColor' => options[:foreground_color],
+          'backgroundColor' => options[:background_color],
+          'creditType' => options[:credit_type],
+          'creditLimit' => options[:credit_limit],
+          'creditBalance' => options[:credit_balance],
+          'currency' => options[:currency],
+          'defaultShipTo' => options[:default_ship_to],
+          'userDef1' => options[:user_def_1],
+          'userDef2' => options[:user_def_2],
+          'discount' => options[:discount],
+          'receivableAccount' => options[:receivable_account],
+          'upload' => options[:upload],
+          'address' => options[:address],
           'createdBy' => options[:created_by],
           'modifiedBy' => options[:modified_by]
         )
@@ -161,8 +177,6 @@ module Spire
       return update! if id
 
       options = {
-        code: code || 'XXXXXXX', # must be unique
-        customerNo: customer_no || 'XXXXXXX', # must be unique
         name: name,
         status: status || ACTIVE,
         backgroundColor: background_color || 16777215,
@@ -184,6 +198,14 @@ module Spire
         userDef2: user_def_2 || '',
         discount: discount || '0',
       }
+
+      if customer_no.present?
+        options[:customerNo] = customer_no
+      end
+
+      if code.present?
+        options[:code] = code
+      end
 
       from_response client.post("/customers/", options)
     end
