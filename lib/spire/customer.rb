@@ -5,17 +5,54 @@ module Spire
   #   @return [int]
   # @!attribute [rw] name
   #   @return [String]
-  # @!attribute [rw] address
-  #   @return [Hash]
+  # @!attribute [rw] customer_no
+  #   @return [String]
+  # @!attribute [rw] code
+  #   @return [String]
+  # @!attribute [rw] hold
+  #   @return [boolean]
+  # @!attribute [rw] status
+  #   @return [String]
+  # @!attribute [rw] reference
+  #   @return [String]
+  # @!attribute [rw] apply_finance_charges
+  #   @return [boolean]
+  # @!attribute [rw] foreground_color As a color decimal
+  #   @return [int]
   # @!attribute [rw] background_color As a color decimal
   #   @return [int]
-  # @!attribute [rw] status
+  # @!attribute [rw] credit_type
+  #   @return [int]
+  # @!attribute [rw] credit_balance
+  #   @return [String]
+  # @!attribute [rw] currency
+  #   @return [String]
+  # @!attribute [rw] default_ship_to
+  #   @return [String]
+  # @!attribute [rw] user_def_1
+  #   @return [String]
+  # @!attribute [rw] user_def_2
+  #   @return [String]
+  # @!attribute [rw] discount
+  #   @return [String]
+  # @!attribute [rw] receivable_account
+  #   @return [String]
+  # @!attribute [rw] upload
+  #   @return [boolean]
+  # @!attribute [rw] address
+  #   @return [Hash]
+  # @!attribute [r] created_by
+  #   @return [String]
+  # @!attribute [r] modified_by
   #   @return [String]
  
   class Customer < BasicData
-    register_attributes :id, :name, :address, :background_color, :status, :created_by, :modified_by,
+    register_attributes :id, :name, :customer_no, :code, :hold, :status, :reference, :apply_finance_charges,
+                        :foreground_color, :background_color, :credit_type, :credit_limit, :credit_balance,
+                        :currency, :default_ship_to, :user_def_1, :user_def_2, :discount, :receivable_account,
+                        :upload, :address, :created_by, :modified_by,
       readonly: [
-        :id
+        :id, :created_by, :modified_by
       ]
 
     validates_presence_of :id, :name
@@ -23,9 +60,25 @@ module Spire
     SYMBOL_TO_STRING = {
       id: 'id',
       name: 'name',
-      address: 'address',
-      background_color: 'backgroundColor', 
+      customer_no: 'customerNo',
+      code: 'code',
+      hold: 'hold',
       status: 'status',
+      reference: 'reference',
+      apply_finance_charges: 'applyFinanceCharges',
+      foreground_color: 'foregroundColor',
+      background_color: 'backgroundColor',
+      credit_type: 'creditType',
+      credit_limit: 'creditLimit',
+      credit_balance: 'creditBalance',
+      currency: 'currency',
+      default_ship_to: 'defaultShipTo',
+      user_def_1: 'userDef1',
+      user_def_2: 'userDef2',
+      discount: 'discount',
+      receivable_account: 'receivableAccount',
+      upload: 'upload',
+      address: 'address',
       created_by: 'createdBy',
       modified_by: 'modifiedBy'
     }
@@ -63,9 +116,25 @@ module Spire
       def create(options)
         client.create(:customer,
           'name' => options[:name],
-          'address' => options[:address],
-          'backgroundColor' => options[:background_color],
+          'customerNo' => options[:customer_no],
+          'code' => options[:code],
+          'hold' => options[:hold],
           'status' => options[:status],
+          'reference' => options[:reference],
+          'applyFinanceCharges' => options[:apply_finance_charges],
+          'foregroundColor' => options[:foreground_color],
+          'backgroundColor' => options[:background_color],
+          'creditType' => options[:credit_type],
+          'creditLimit' => options[:credit_limit],
+          'creditBalance' => options[:credit_balance],
+          'currency' => options[:currency],
+          'defaultShipTo' => options[:default_ship_to],
+          'userDef1' => options[:user_def_1],
+          'userDef2' => options[:user_def_2],
+          'discount' => options[:discount],
+          'receivableAccount' => options[:receivable_account],
+          'upload' => options[:upload],
+          'address' => options[:address],
           'createdBy' => options[:created_by],
           'modifiedBy' => options[:modified_by]
         )
@@ -109,12 +178,34 @@ module Spire
 
       options = {
         name: name,
-        address: address || {},
-        backgroundColor: background_color || 16777215,
         status: status || ACTIVE,
+        backgroundColor: background_color || 16777215,
+        address: address || {},
         createdBy: created_by || '',
-        modifiedBy: modified_by || ''
+        modifiedBy: modified_by,
+        hold: hold || false,
+        applyFinanceCharges: apply_finance_charges || false,
+        foregroundColor: foreground_color || 00000000,
+        creditType: credit_type || 2,
+        creditLimit: credit_limit || '0',
+        creditBalance: credit_balance || '0',
+        currency: currency || 'CAD',
+        defaultShipTo: default_ship_to || '',
+        receivableAccount: receivable_account || '11210',
+        upload: upload || false,
+        reference: reference || '',
+        userDef1: user_def_1 || '',
+        userDef2: user_def_2 || '',
+        discount: discount || '0',
       }
+
+      if customer_no.present?
+        options[:customerNo] = customer_no
+      end
+
+      if code.present?
+        options[:code] = code
+      end
 
       from_response client.post("/customers/", options)
     end
