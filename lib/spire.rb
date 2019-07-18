@@ -36,7 +36,7 @@ module Spire
     autoload :BasicAuthPolicy, 'spire/authorization'
   end
 
-  API_VERSION = 1
+  API_VERSION = 2
 
   # This error is thrown when your client has not been configured
   ConfigurationError = Class.new(Error)
