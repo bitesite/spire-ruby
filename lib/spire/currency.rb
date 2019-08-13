@@ -149,20 +149,6 @@ module Spire
       client.delete("/currencies/#{id}")
     end
 
-    # Sets status to inactive.
-    # This will not make any changes on Spire.
-    # If you want to save changes to Spire call .save or .update!
-    def make_inactive
-      self.status = INACTIVE
-    end
-
-    # Sets status to active.
-    # This will not make any changes on Spire.
-    # If you want to save changes to Spire call .save or .update!
-    def make_active
-      self.status = ACTIVE
-    end
-
     # Is the record valid?
     def valid?
       !name.nil?
