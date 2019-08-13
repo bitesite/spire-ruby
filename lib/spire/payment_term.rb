@@ -45,6 +45,15 @@ module Spire
         client.find_many(Spire::PaymentTerm, '/payment_terms/', {q: query})
       end
 
+      # Search for all payment terms
+      #
+      # @raise [Spire::Error] if the items could not be found.
+      #
+      # @return [Spire::PaymentTerm]
+      def all(limit)
+        client.get('/payment_terms/', {limit: limit})
+      end
+
       # Create a new payment term and save it on Spire.
       #
       # @param [Hash] options

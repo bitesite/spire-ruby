@@ -1,7 +1,7 @@
 module Spire
  
-  class ShippingMethod < BasicData
-    register_attributes  :id, :code, :description, :type, :threshold, :rate, :min_charge, :max_charge,
+  class Territory < BasicData
+    register_attributes :id, :code, :name, :description, :created, :createdBy, :modified, :modifiedBy,
       readonly: [
         :id
       ]
@@ -11,60 +11,60 @@ module Spire
     SYMBOL_TO_STRING = {
       id: 'id',
       code: 'code',
+      name: 'name',
       description: 'description',
-      type: 'type',
-      threshold: 'threshold',
-      rate: 'rate',
-      min_charge: 'minCharge',
-      max_charge: 'maxCharge'
+      created: 'created',
+      createdBy: 'created_by',
+      modified: 'modified',
+      modifiedBy: 'modified_by'
     }
 
     class << self
 
-      # Search for shipping methods by query. This will even return inactive shipping methods!
+      # Search for territories by query. This will even return inactive territories!
       #
       # @raise [Spire::Error] if the item could not be found.
       #
-      # @return [Spire::ShippingMethod]
+      # @return [Spire::Territory]
       def search(query)
-        client.find_many(Spire::ShippingMethod, '/shipping_methods/', {q: query})
+        client.find_many(Spire::Territory, '/territories/', {q: query})
       end
 
-      # Search for all shipping methods
+      # Search for all territories
       #
       # @raise [Spire::Error] if the items could not be found.
       #
-      # @return [Spire::ShippingMethod]
+      # @return [Spire::Territory]
       def all(limit)
-        client.get('/shipping_methods/', {limit: limit})
+        client.get('/territories/', {limit: limit})
       end
 
-      # Create a new shipping method and save it on Spire.
+      # Create a new territory and save it on Spire.
       #
       # @param [Hash] options
-      # @option options [String] :name The name of the shipping method
+      # @option options [String] :name The name of the territory
       #
       # @raise [Spire::Error] if the item could not be created.
       #
-      # @return [Spire::ShippingMethod]
+      # @return [Spire::Territory]
       def create(options)
-        client.create(:shipping_method,
+        client.create(:territories,
           'id' => options[:id],
           'code' => options[:code],
+          'name' => options[:name],
           'description' => options[:description],
-          'type' => options[:type],
-          'threshold' => options[:threshold],
-          'rate' => options[:rate],
-          'minCharge' => options[:min_charge],
-          'maxCharge' => options[:max_charge]
+          'created' => options[:created],
+          'createdBy' => options[:created_by],
+          'modified' => options[:modified],
+          'modifiedBy' => options[:modified_by]
         )
       end
     end
 
-    # Update the fields of a shipping method.
+    # Update the fields of a territory.
     #
     # Supply a hash of string keyed data retrieved from the Spire API representing
-    # a shipping method.
+    # a territory.
     #
     # Note that this this method does not save anything new to the Spire API,
     # it just assigns the input attributes to your local object. If you use
@@ -72,7 +72,7 @@ module Spire
     # you want to persist your changes to Spire.
     #
     # @param [Hash] fields
-    # @option fields [String] :name The name of the shipping method
+    # @option fields [String] :name The name of the territory
     #
     # @return [Spire::Item] self
     def update_fields(fields)

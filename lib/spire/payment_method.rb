@@ -43,6 +43,16 @@ module Spire
         client.find_many(Spire::PaymentMethod, '/payment_methods/', {q: query})
       end
 
+      # Search for all payment methods
+      #
+      # @raise [Spire::Error] if the items could not be found.
+      #
+      # @return [Spire::PaymentMethod]
+      def all(limit)
+        client.get('/payment_methods/', {limit: limit})
+      end
+
+
       # Create a new payment methods and save it on Spire.
       #
       # @param [Hash] options

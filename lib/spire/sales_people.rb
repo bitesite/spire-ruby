@@ -40,6 +40,15 @@ module Spire
         client.find_many(Spire::Salesperson, '/salespeople/', {q: query})
       end
 
+      # Search for all sales people
+      #
+      # @raise [Spire::Error] if the items could not be found.
+      #
+      # @return [Spire::Salesperson]
+      def all(limit)
+        client.get('/salespeople/', {limit: limit})
+      end
+
       # Create a new sales person and save it on Spire.
       #
       # @param [Hash] options

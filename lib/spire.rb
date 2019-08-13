@@ -28,6 +28,7 @@ module Spire
   autoload :Currency,       'spire/currency'
   autoload :Salesperson,    'spire/sales_people'
   autoload :ShippingMethod, 'spire/shipping_method'
+  autoload :Territory,      'spire/territory'
   autoload :Vendor,         'spire/vendor'
   autoload :Request,        'spire/net'
   autoload :SInternet,      'spire/net'

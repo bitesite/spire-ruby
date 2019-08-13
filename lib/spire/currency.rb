@@ -44,6 +44,15 @@ module Spire
         client.find_many(Spire::Currency, '/currencies/', {q: query})
       end
 
+      # Search for all currencies
+      #
+      # @raise [Spire::Error] if the items could not be found.
+      #
+      # @return [Spire::Currency]
+      def all(limit)
+        client.get('/currencies/', {limit: limit})
+      end
+
       # Create a new currency and save it on Spire.
       #
       # @param [Hash] options
