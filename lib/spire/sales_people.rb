@@ -37,7 +37,7 @@ module Spire
       #
       # @return [Spire::SalesPeople]
       def search(query)
-        client.find_many(Spire::SalesPeople, '/salespeople/', {q: query})
+        client.find_many(Spire::Salesperson, '/salespeople/', {q: query})
       end
 
       # Create a new sales person and save it on Spire.

@@ -42,7 +42,7 @@ module Spire
       #
       # @return [Spire::PaymentTerms]
       def search(query)
-        client.find_many(Spire::PaymentTerms, '/payment_terms/', {q: query})
+        client.find_many(Spire::PaymentTerm, '/payment_terms/', {q: query})
       end
 
       # Create a new payment term and save it on Spire.
