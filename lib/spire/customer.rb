@@ -41,6 +41,10 @@ module Spire
   #   @return [boolean]
   # @!attribute [rw] address
   #   @return [Hash]
+  # @!attribute [rw] shipping_addresses
+  #   @return [Hash]
+  # @!attribute [rw] payment_terms
+  #   @return [Hash]
   # @!attribute [r] created_by
   #   @return [String]
   # @!attribute [r] modified_by
@@ -50,7 +54,7 @@ module Spire
     register_attributes :id, :name, :customer_no, :code, :hold, :status, :reference, :apply_finance_charges,
                         :foreground_color, :background_color, :credit_type, :credit_limit, :credit_balance,
                         :currency, :default_ship_to, :user_def_1, :user_def_2, :discount, :receivable_account,
-                        :upload, :address, :created_by, :modified_by,
+                        :upload, :address, :shipping_addresses, :payment_terms, :created_by, :modified_by,
       readonly: [
         :id, :created_by, :modified_by
       ]
@@ -79,6 +83,8 @@ module Spire
       receivable_account: 'receivableAccount',
       upload: 'upload',
       address: 'address',
+      shipping_addresses: 'shippingAddresses',
+      payment_terms: 'paymentTerms',
       created_by: 'createdBy',
       modified_by: 'modifiedBy'
     }
@@ -135,6 +141,8 @@ module Spire
           'receivableAccount' => options[:receivable_account],
           'upload' => options[:upload],
           'address' => options[:address],
+          'shippingAddresses' => options[:shipping_addresses],
+          'paymentTerms' => options[:payment_terms],
           'createdBy' => options[:created_by],
           'modifiedBy' => options[:modified_by]
         )
@@ -197,6 +205,8 @@ module Spire
         userDef1: user_def_1 || '',
         userDef2: user_def_2 || '',
         discount: discount || '0',
+        paymentTerms: payment_terms || {},
+        shippingAddresses: shipping_addresses || []
       }
 
       if customer_no.present?
