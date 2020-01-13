@@ -48,30 +48,30 @@ module Spire
         :created,
         :modified,
         :created_date_time,
-        :modified_date_time
+        :modified_date_time,
       ]
 
     validates_presence_of :id, :vendor_no
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      vendor_no: 'vendorNo',
-      code: 'code',
-      name: 'name',
-      hold: 'hold',
-      status: 'status',
-      address: 'address',
-      shipping_addresses: 'shippingAddresses',
-      payment_terms: 'paymentTerms',
-      currency: 'currency',
-      foreground_color: 'foregroundColor',
-      background_color: 'backgroundColor',
-      created_by: 'createdBy',
-      modified_by: 'modifiedBy',
-      created: 'created',
-      modified: 'modified',
-      created_date_time: 'createdDateTime',
-      modified_date_time: 'modifiedDateTime'
+      id: "id",
+      vendor_no: "vendorNo",
+      code: "code",
+      name: "name",
+      hold: "hold",
+      status: "status",
+      address: "address",
+      shipping_addresses: "shippingAddresses",
+      payment_terms: "paymentTerms",
+      currency: "currency",
+      foreground_color: "foregroundColor",
+      background_color: "backgroundColor",
+      created_by: "createdBy",
+      modified_by: "modifiedBy",
+      created: "created",
+      modified: "modified",
+      created_date_time: "createdDateTime",
+      modified_date_time: "modifiedDateTime",
     }
 
     class << self
@@ -81,7 +81,7 @@ module Spire
       #
       # @return [Spire::Vendor]
       def find(id, params = {})
-        client.find('/vendors', id, params)
+        client.find("/vendors", id, params)
       end
 
       # Search for vendors by query.
@@ -90,7 +90,7 @@ module Spire
       #
       # @return [Spire::Vendor]
       def search(query)
-        client.find_many(Spire::Vendor, '/vendors/', {q: query})
+        client.find_many(Spire::Vendor, "/vendors/", { q: query })
       end
 
       # Create a new vendor and save it on Spire.
@@ -120,25 +120,24 @@ module Spire
       # @return [Spire::Vendor]
       def create(options)
         client.create(:vendor,
-          'id' => options[:id],
-          'vendorNo' => options[:vendor_no],
-          'code' => options[:code],
-          'name' => options[:name],
-          'hold' => options[:hold],
-          'status' => options[:status],
-          'address' => options[:address],
-          'shippingAddresses' => options[:shipping_addresses],
-          'paymentTerms' => options[:payment_terms],
-          'currency' => options[:currency],
-          'foregroundColor' => options[:foreground_color],
-          'backgroundColor' => options[:background_color],
-          'createdBy' => options[:created_by],
-          'modifiedBy' => options[:modified_by],
-          'created' => options[:created],
-          'modified' => options[:modified],
-          'createdDateTime' => options[:created_date_time],
-          'modifiedDateTime' => options[:modified_date_time]
-        )
+                      "id" => options[:id],
+                      "vendorNo" => options[:vendor_no],
+                      "code" => options[:code],
+                      "name" => options[:name],
+                      "hold" => options[:hold],
+                      "status" => options[:status],
+                      "address" => options[:address],
+                      "shippingAddresses" => options[:shipping_addresses],
+                      "paymentTerms" => options[:payment_terms],
+                      "currency" => options[:currency],
+                      "foregroundColor" => options[:foreground_color],
+                      "backgroundColor" => options[:background_color],
+                      "createdBy" => options[:created_by],
+                      "modifiedBy" => options[:modified_by],
+                      "created" => options[:created],
+                      "modified" => options[:modified],
+                      "createdDateTime" => options[:created_date_time],
+                      "modifiedDateTime" => options[:modified_date_time])
       end
     end
 
@@ -200,13 +199,13 @@ module Spire
         code: code || vendor_no,
         name: name,
         hold: hold || false,
-        status: status || 'A',
+        status: status || "A",
         address: address || {}, # seems like address is required when creating a new vendor
         shippingAddresses: shipping_addresses || [],
         paymentTerms: payment_terms || {},
         currency: currency || "CAD",
         foregroundColor: foreground_color || 0,
-        backgroundColor: background_color || 16777215
+        backgroundColor: background_color || 16777215,
       })
     end
 
@@ -224,7 +223,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/vendors/#{id}", payload)
     end
@@ -240,14 +240,14 @@ module Spire
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def make_inactive
-      self.status = 'I'
+      self.status = "I"
     end
 
     # Sets status to active.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
     def make_active
-      self.status = 'A'
+      self.status = "A"
     end
 
     # Is the record valid?

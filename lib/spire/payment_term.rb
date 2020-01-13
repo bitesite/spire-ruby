@@ -1,29 +1,29 @@
 module Spire
   # A PaymentTerms is a customer account.
   #
- 
+
   class PaymentTerm < BasicData
     register_attributes :id, :code, :description, :days_before_due, :days_allowed, :discount_rate, :apply_discount_to_net,
-                        :apply_discount_to_freight, :created, :created_by, :modified, :modified_by,
+      :apply_discount_to_freight, :created, :created_by, :modified, :modified_by,
       readonly: [
-        :id, :created_by, :modified_by
+        :id, :created_by, :modified_by,
       ]
 
     validates_presence_of :id
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      code: 'code',
-      description: 'description',
-      days_before_due: 'daysBeforeDue',
-      days_allowed: 'daysAllowed',
-      discount_rate: 'discountRate',
-      apply_discount_to_net: 'applyDiscountToNet',
-      apply_discount_to_freight: 'applyDiscountToFreight',
-      created: 'created',
-      created_by: 'createdBy',
-      modified: 'modified',
-      modified_by: 'modifiedBy'
+      id: "id",
+      code: "code",
+      description: "description",
+      days_before_due: "daysBeforeDue",
+      days_allowed: "daysAllowed",
+      discount_rate: "discountRate",
+      apply_discount_to_net: "applyDiscountToNet",
+      apply_discount_to_freight: "applyDiscountToFreight",
+      created: "created",
+      created_by: "createdBy",
+      modified: "modified",
+      modified_by: "modifiedBy",
     }
 
     class << self
@@ -33,7 +33,7 @@ module Spire
       #
       # @return [Spire::PaymentTerms]
       def find(id, params = {})
-        client.find('/payment_terms', id, params)
+        client.find("/payment_terms", id, params)
       end
 
       # Search for payment terms by query
@@ -42,7 +42,7 @@ module Spire
       #
       # @return [Spire::PaymentTerms]
       def search(query)
-        client.find_many(Spire::PaymentTerm, '/payment_terms/', {q: query})
+        client.find_many(Spire::PaymentTerm, "/payment_terms/", { q: query })
       end
 
       # Search for all payment terms
@@ -51,7 +51,7 @@ module Spire
       #
       # @return [Spire::PaymentTerm]
       def all(limit)
-        client.get('/payment_terms/', {limit: limit})
+        client.get("/payment_terms/", { limit: limit })
       end
 
       # Create a new payment term and save it on Spire.
@@ -63,19 +63,18 @@ module Spire
       # @return [Spire::PaymentTerms]
       def create(options)
         client.create(:payment_term,
-          'id' => options[:id],
-          'code' => options[:code],
-          'description' => options[:description],
-          'daysBeforeDue' => options[:days_before_due],
-          'daysAllowed' => options[:days_allowed],
-          'discountRate' => options[:discount_rate],
-          'applyDiscountToNet' => options[:apply_discount_to_net],
-          'applyDiscountToFreight' => options[:apply_discount_to_freight],
-          'created' => options[:created],
-          'createdBy' => options[:created_by],
-          'modified' => options[:modified],
-          'modifiedBy' => options[:modified_by]
-        )
+                      "id" => options[:id],
+                      "code" => options[:code],
+                      "description" => options[:description],
+                      "daysBeforeDue" => options[:days_before_due],
+                      "daysAllowed" => options[:days_allowed],
+                      "discountRate" => options[:discount_rate],
+                      "applyDiscountToNet" => options[:apply_discount_to_net],
+                      "applyDiscountToFreight" => options[:apply_discount_to_freight],
+                      "created" => options[:created],
+                      "createdBy" => options[:created_by],
+                      "modified" => options[:modified],
+                      "modifiedBy" => options[:modified_by])
       end
     end
 
@@ -121,7 +120,7 @@ module Spire
         days_allowed: daysAllowed,
         discount_rate: discountRate,
         apply_discount_to_net: applyDiscountToNet,
-        apply_discount_to_freight: applyDiscountToFreight
+        apply_discount_to_freight: applyDiscountToFreight,
       }
 
       from_response client.post("/payment_terms/", options)
@@ -141,7 +140,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/payment_terms/#{id}", payload)
     end

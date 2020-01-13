@@ -25,22 +25,22 @@ module Spire
   class Upc < BasicData
     register_attributes :id, :whse, :part_no, :inventory, :uom_code, :upc, :created_by, :modified_by, :created, :modified,
       readonly: [
-        :id, :whse, :part_no, :created_by, :modified_by, :created, :modified
+        :id, :whse, :part_no, :created_by, :modified_by, :created, :modified,
       ]
 
     validates_presence_of :upc, :uomCode, :inventory
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      whse: 'whse',
-      part_no: 'partNo',
-      inventory: 'inventory',
-      uom_code: 'uomCode',
-      upc: 'upc',
-      created_by: 'createdBy',
-      modified_by: 'modifiedBy',
-      created: 'created',
-      modified: 'modified'
+      id: "id",
+      whse: "whse",
+      part_no: "partNo",
+      inventory: "inventory",
+      uom_code: "uomCode",
+      upc: "upc",
+      created_by: "createdBy",
+      modified_by: "modifiedBy",
+      created: "created",
+      modified: "modified",
     }
 
     class << self
@@ -50,7 +50,7 @@ module Spire
       #
       # @return [Spire::Upc]
       def find(id, params = {})
-        client.find('/inventory/upcs', id, params)
+        client.find("/inventory/upcs", id, params)
       end
 
       # Search for upcs by query. This will even return inactive upcs!
@@ -59,7 +59,7 @@ module Spire
       #
       # @return [Spire::Upc]
       def search(query)
-        client.find_many(Spire::Upc, '/inventory/upcs/', {q: query})
+        client.find_many(Spire::Upc, "/inventory/upcs/", { q: query })
       end
 
       # Find upcs and filter. This will even return inactive upcs!
@@ -68,7 +68,7 @@ module Spire
       #
       # @ return [Spire::Upc]
       def filter(filter)
-        client.find_many(Spire::Upc, '/inventory/upcs/', {filter: filter})
+        client.find_many(Spire::Upc, "/inventory/upcs/", { filter: filter })
       end
 
       # Create a new item and save it on Spire.
@@ -83,10 +83,9 @@ module Spire
       # @return [Spire::Upc]
       def create(options)
         client.create(:upc,
-          'upc' => options[:upc],
-          'uomCode' => options[:uom_code],
-          'inventory' => options[:inventory]
-        )
+                      "upc" => options[:upc],
+                      "uomCode" => options[:uom_code],
+                      "inventory" => options[:inventory])
       end
     end
 
@@ -130,7 +129,7 @@ module Spire
       options = {
         upc: upc,
         uomCode: uom_code,
-        inventory: inventory
+        inventory: inventory,
       }
 
       from_response client.post("/inventory/upcs/", options)
@@ -150,7 +149,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/inventory/upcs/#{id}", payload)
     end

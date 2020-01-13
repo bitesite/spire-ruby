@@ -68,7 +68,7 @@ module Spire
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color,
       readonly: [
-        :created_by, :modified_by, :created, :modified, :order_no
+        :created_by, :modified_by, :created, :modified, :order_no,
       ]
 
     validates_presence_of :id, :customer, :address, :shipping_address, :items
@@ -82,38 +82,37 @@ module Spire
     PROCESSED = "P"
     DEPOSITED = "L"
 
-
     SYMBOL_TO_STRING = {
-      id: 'id',
-      order_no: 'orderNo',
-      customer: 'customer',
-      status: 'status',
-      type: 'type',
-      hold: 'hold',
-      order_date: 'orderDate',
-      address: 'address',
-      shipping_address: 'shippingAddress',
-      customer_po: 'customerPO',
-      fob: 'fob',
-      terms_code: 'termsCode',
-      terms_text: 'termsText',
-      freight: 'freight',
-      taxes: 'taxes',
-      subtotal: 'subtotal',
-      subtotal_ordered: 'subtotalOrdered',
-      discount: 'discount',
-      total_discount: 'totalDiscount',
-      total: 'total',
-      total_ordered: 'totalOrdered',
-      gross_profit: 'grossProfit',
-      items: 'items',
-      payments: 'payments',
-      contact: 'contact',
-      created_by: 'createdBy',
-      modified_by: 'modifiedBy',
-      created: 'created',
-      modified: 'modified',
-      background_color: 'backgroundColor'
+      id: "id",
+      order_no: "orderNo",
+      customer: "customer",
+      status: "status",
+      type: "type",
+      hold: "hold",
+      order_date: "orderDate",
+      address: "address",
+      shipping_address: "shippingAddress",
+      customer_po: "customerPO",
+      fob: "fob",
+      terms_code: "termsCode",
+      terms_text: "termsText",
+      freight: "freight",
+      taxes: "taxes",
+      subtotal: "subtotal",
+      subtotal_ordered: "subtotalOrdered",
+      discount: "discount",
+      total_discount: "totalDiscount",
+      total: "total",
+      total_ordered: "totalOrdered",
+      gross_profit: "grossProfit",
+      items: "items",
+      payments: "payments",
+      contact: "contact",
+      created_by: "createdBy",
+      modified_by: "modifiedBy",
+      created: "created",
+      modified: "modified",
+      background_color: "backgroundColor",
     }
 
     class << self
@@ -123,7 +122,7 @@ module Spire
       #
       # @return [Spire::Order]
       def find(id, params = {})
-        client.find('/sales/orders', id, params)
+        client.find("/sales/orders", id, params)
       end
 
       # Search for order by query. This will even return inactive orders!
@@ -132,7 +131,7 @@ module Spire
       #
       # @return [Spire::Order]
       def search(query)
-        client.find_many(Spire::Order, '/sales/orders/', {q: query})
+        client.find_many(Spire::Order, "/sales/orders/", { q: query })
       end
 
       # Create a new item and save it on Spire.
@@ -157,18 +156,18 @@ module Spire
       def create(options)
         client.create(
           :order,
-          'customer' => options[:customer],
-          'status' => options[:status],
-          'termsCode' => options[:terms_code],
-          'address' => options[:address],
-          'shippingAddress' => options[:shipping_address],
-          'items' => options[:items],
-          'discount' => options[:discount],
-          'freight' => options[:freight],
-          'customerPO' => options[:customer_po],
-          'type' => options[:type],
-          'contact' => options[:contact],
-          'payments' => options[:payments]
+          "customer" => options[:customer],
+          "status" => options[:status],
+          "termsCode" => options[:terms_code],
+          "address" => options[:address],
+          "shippingAddress" => options[:shipping_address],
+          "items" => options[:items],
+          "discount" => options[:discount],
+          "freight" => options[:freight],
+          "customerPO" => options[:customer_po],
+          "type" => options[:type],
+          "contact" => options[:contact],
+          "payments" => options[:payments],
         )
       end
     end
@@ -231,7 +230,7 @@ module Spire
       return update! if id
 
       options = {
-        customer: customer|| {},
+        customer: customer || {},
         address: address || {},
         shippingAddress: shipping_address || {},
         items: items || {},
@@ -244,7 +243,7 @@ module Spire
         payments: payments || [],
         contact: contact || {},
         status: status || OPEN,
-        backgroundColor: background_color || 16777215
+        backgroundColor: background_color || 16777215,
       }
 
       from_response client.post("/sales/orders/", options)
@@ -264,7 +263,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/sales/orders/#{id}", payload)
     end
