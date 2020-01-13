@@ -1,24 +1,23 @@
 module Spire
   # A SalesPerson is a person.
-  
- 
+
   class Salesperson < BasicData
     register_attributes :id, :sales_person_no, :code, :name, :created, :created_by, :modified, :modified_by,
-    readonly: [
-        :id, :created_by, :modified_by
+      readonly: [
+        :id, :created_by, :modified_by,
       ]
 
     validates_presence_of :id, :name
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      sales_person_no: 'salespersonNo',
-      code: 'code',
-      name: 'name',
-      created: 'created',
-      created_by: 'createdBy',
-      modified: 'modified',
-      modified_by: 'modifiedBy'
+      id: "id",
+      sales_person_no: "salespersonNo",
+      code: "code",
+      name: "name",
+      created: "created",
+      created_by: "createdBy",
+      modified: "modified",
+      modified_by: "modifiedBy",
     }
 
     class << self
@@ -28,7 +27,7 @@ module Spire
       #
       # @return [Spire::SalesPeople]
       def find(id, params = {})
-        client.find('/salespeople', id, params)
+        client.find("/salespeople", id, params)
       end
 
       # Search for sales people by query.
@@ -37,7 +36,7 @@ module Spire
       #
       # @return [Spire::SalesPeople]
       def search(query)
-        client.find_many(Spire::Salesperson, '/salespeople/', {q: query})
+        client.find_many(Spire::Salesperson, "/salespeople/", { q: query })
       end
 
       # Search for all sales people
@@ -46,7 +45,7 @@ module Spire
       #
       # @return [Spire::Salesperson]
       def all(limit)
-        client.get('/salespeople/', {limit: limit})
+        client.get("/salespeople/", { limit: limit })
       end
 
       # Create a new sales person and save it on Spire.
@@ -59,15 +58,14 @@ module Spire
       # @return [Spire::SalesPeople]
       def create(options)
         client.create(:salespeople,
-          'id' => options[:id],
-          'salespersonNo' => options[:sales_person_no],
-          'code' => options[:code],
-          'name' => options[:name],
-          'created' => options[:created],
-          'createdBy' => options[:created_by],
-          'modified' => options[:modified],
-          'modifiedBy' => options[:modified_by]
-        )
+                      "id" => options[:id],
+                      "salespersonNo" => options[:sales_person_no],
+                      "code" => options[:code],
+                      "name" => options[:name],
+                      "created" => options[:created],
+                      "createdBy" => options[:created_by],
+                      "modified" => options[:modified],
+                      "modifiedBy" => options[:modified_by])
       end
     end
 
@@ -114,7 +112,7 @@ module Spire
         created: created,
         created_by: createdBy,
         modified: modified,
-        modified_by: modifiedBy
+        modified_by: modifiedBy,
       }
 
       from_response client.post("/salespeople/", options)
@@ -134,7 +132,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/salespeople/#{id}", payload)
     end

@@ -1,28 +1,28 @@
 module Spire
   # A Currency is a type of currency.
- 
+
   class Currency < BasicData
     register_attributes :id, :code, :country, :description, :indirect, :fixed_rate, :buy_rate,
-                        :sell_rate, :last_year_rate, :this_year_rate, :next_year_rate, :symbol,
+      :sell_rate, :last_year_rate, :this_year_rate, :next_year_rate, :symbol,
       readonly: [
-        :id
+        :id,
       ]
 
     validates_presence_of :id
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      code: 'code',
-      country: 'country',
-      description: 'description',
-      indirect: 'indirect',
-      fixed_rate: 'fixedRate',
-      buy_rate: 'buyRate',
-      sell_rate: 'sellRate',
-      last_year_rate: 'lastYearRate',
-      this_year_rate: 'thisYearRate',
-      next_year_rate: 'nextYearRate',
-      symbol: 'symbol'
+      id: "id",
+      code: "code",
+      country: "country",
+      description: "description",
+      indirect: "indirect",
+      fixed_rate: "fixedRate",
+      buy_rate: "buyRate",
+      sell_rate: "sellRate",
+      last_year_rate: "lastYearRate",
+      this_year_rate: "thisYearRate",
+      next_year_rate: "nextYearRate",
+      symbol: "symbol",
     }
 
     class << self
@@ -32,7 +32,7 @@ module Spire
       #
       # @return [Spire::Currency]
       def find(id, params = {})
-        client.find('/currencies', id, params)
+        client.find("/currencies", id, params)
       end
 
       # Search for currencies by query.
@@ -41,7 +41,7 @@ module Spire
       #
       # @return [Spire::Currency]
       def search(query)
-        client.find_many(Spire::Currency, '/currencies/', {q: query})
+        client.find_many(Spire::Currency, "/currencies/", { q: query })
       end
 
       # Search for all currencies
@@ -50,7 +50,7 @@ module Spire
       #
       # @return [Spire::Currency]
       def all(limit)
-        client.get('/currencies/', {limit: limit})
+        client.get("/currencies/", { limit: limit })
       end
 
       # Create a new currency and save it on Spire.
@@ -63,19 +63,18 @@ module Spire
       # @return [Spire::Currency]
       def create(options)
         client.create(:currency,
-          'id' => options[:id],
-          'code' => options[:code],
-          'country' => options[:country],
-          'description' => options[:description],
-          'indirect' => options[:indirect],
-          'fixedRate' => options[:fixed_rate],
-          'buyRate' => options[:buy_rate],
-          'sellRate' => options[:sell_rate],
-          'lastYearRate' => options[:last_year_rate],
-          'thisYearRate' => options[:this_year_rate],
-          'nextYearRate' => options[:next_year_rate],
-          'symbol' => options[:symbol]
-        )
+                      "id" => options[:id],
+                      "code" => options[:code],
+                      "country" => options[:country],
+                      "description" => options[:description],
+                      "indirect" => options[:indirect],
+                      "fixedRate" => options[:fixed_rate],
+                      "buyRate" => options[:buy_rate],
+                      "sellRate" => options[:sell_rate],
+                      "lastYearRate" => options[:last_year_rate],
+                      "thisYearRate" => options[:this_year_rate],
+                      "nextYearRate" => options[:next_year_rate],
+                      "symbol" => options[:symbol])
       end
     end
 
@@ -115,18 +114,18 @@ module Spire
       return update! if id
 
       options = {
-        id: id, 
-        code: code, 
-        country: country, 
-        description: description, 
-        indirect: indirect, 
-        fixedRate: fixed_rate, 
-        buyRate: buy_rate, 
-        sellRate: sell_rate, 
-        lastYearRate: last_year_rate, 
-        thisYearRate: this_year_rate, 
-        nextYearRate: next_year_rate, 
-        symbol: symbol
+        id: id,
+        code: code,
+        country: country,
+        description: description,
+        indirect: indirect,
+        fixedRate: fixed_rate,
+        buyRate: buy_rate,
+        sellRate: sell_rate,
+        lastYearRate: last_year_rate,
+        thisYearRate: this_year_rate,
+        nextYearRate: next_year_rate,
+        symbol: symbol,
       }
 
       from_response client.post("/currencies/", options)
@@ -146,7 +145,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/currencies/#{id}", payload)
     end

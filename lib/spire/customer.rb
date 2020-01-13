@@ -49,48 +49,48 @@ module Spire
   #   @return [String]
   # @!attribute [r] modified_by
   #   @return [String]
- 
+
   class Customer < BasicData
     register_attributes :id, :name, :customer_no, :code, :hold, :status, :reference, :apply_finance_charges,
-                        :foreground_color, :background_color, :credit_type, :credit_limit, :credit_balance,
-                        :currency, :default_ship_to, :user_def_1, :user_def_2, :discount, :receivable_account,
-                        :upload, :address, :shipping_addresses, :payment_terms, :created_by, :modified_by,
+      :foreground_color, :background_color, :credit_type, :credit_limit, :credit_balance,
+      :currency, :default_ship_to, :user_def_1, :user_def_2, :discount, :receivable_account,
+      :upload, :address, :shipping_addresses, :payment_terms, :created_by, :modified_by,
       readonly: [
-        :id, :created_by, :modified_by
+        :id, :created_by, :modified_by,
       ]
 
     validates_presence_of :id, :name
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      name: 'name',
-      customer_no: 'customerNo',
-      code: 'code',
-      hold: 'hold',
-      status: 'status',
-      reference: 'reference',
-      apply_finance_charges: 'applyFinanceCharges',
-      foreground_color: 'foregroundColor',
-      background_color: 'backgroundColor',
-      credit_type: 'creditType',
-      credit_limit: 'creditLimit',
-      credit_balance: 'creditBalance',
-      currency: 'currency',
-      default_ship_to: 'defaultShipTo',
-      user_def_1: 'userDef1',
-      user_def_2: 'userDef2',
-      discount: 'discount',
-      receivable_account: 'receivableAccount',
-      upload: 'upload',
-      address: 'address',
-      shipping_addresses: 'shippingAddresses',
-      payment_terms: 'paymentTerms',
-      created_by: 'createdBy',
-      modified_by: 'modifiedBy'
+      id: "id",
+      name: "name",
+      customer_no: "customerNo",
+      code: "code",
+      hold: "hold",
+      status: "status",
+      reference: "reference",
+      apply_finance_charges: "applyFinanceCharges",
+      foreground_color: "foregroundColor",
+      background_color: "backgroundColor",
+      credit_type: "creditType",
+      credit_limit: "creditLimit",
+      credit_balance: "creditBalance",
+      currency: "currency",
+      default_ship_to: "defaultShipTo",
+      user_def_1: "userDef1",
+      user_def_2: "userDef2",
+      discount: "discount",
+      receivable_account: "receivableAccount",
+      upload: "upload",
+      address: "address",
+      shipping_addresses: "shippingAddresses",
+      payment_terms: "paymentTerms",
+      created_by: "createdBy",
+      modified_by: "modifiedBy",
     }
 
-    ACTIVE = 'A'
-    INACTIVE = 'I'
+    ACTIVE = "A"
+    INACTIVE = "I"
 
     class << self
       # Find a specific customer by its id.
@@ -99,7 +99,7 @@ module Spire
       #
       # @return [Spire::Customer]
       def find(id, params = {})
-        client.find('/customers', id, params)
+        client.find("/customers", id, params)
       end
 
       # Search for customers by query. This will even return inactive customers!
@@ -108,7 +108,7 @@ module Spire
       #
       # @return [Spire::Customer]
       def search(query)
-        client.find_many(Spire::Customer, '/customers/', {q: query})
+        client.find_many(Spire::Customer, "/customers/", { q: query })
       end
 
       # Create a new customer and save it on Spire.
@@ -121,31 +121,30 @@ module Spire
       # @return [Spire::Customer]
       def create(options)
         client.create(:customer,
-          'name' => options[:name],
-          'customerNo' => options[:customer_no],
-          'code' => options[:code],
-          'hold' => options[:hold],
-          'status' => options[:status],
-          'reference' => options[:reference],
-          'applyFinanceCharges' => options[:apply_finance_charges],
-          'foregroundColor' => options[:foreground_color],
-          'backgroundColor' => options[:background_color],
-          'creditType' => options[:credit_type],
-          'creditLimit' => options[:credit_limit],
-          'creditBalance' => options[:credit_balance],
-          'currency' => options[:currency],
-          'defaultShipTo' => options[:default_ship_to],
-          'userDef1' => options[:user_def_1],
-          'userDef2' => options[:user_def_2],
-          'discount' => options[:discount],
-          'receivableAccount' => options[:receivable_account],
-          'upload' => options[:upload],
-          'address' => options[:address],
-          'shippingAddresses' => options[:shipping_addresses],
-          'paymentTerms' => options[:payment_terms],
-          'createdBy' => options[:created_by],
-          'modifiedBy' => options[:modified_by]
-        )
+                      "name" => options[:name],
+                      "customerNo" => options[:customer_no],
+                      "code" => options[:code],
+                      "hold" => options[:hold],
+                      "status" => options[:status],
+                      "reference" => options[:reference],
+                      "applyFinanceCharges" => options[:apply_finance_charges],
+                      "foregroundColor" => options[:foreground_color],
+                      "backgroundColor" => options[:background_color],
+                      "creditType" => options[:credit_type],
+                      "creditLimit" => options[:credit_limit],
+                      "creditBalance" => options[:credit_balance],
+                      "currency" => options[:currency],
+                      "defaultShipTo" => options[:default_ship_to],
+                      "userDef1" => options[:user_def_1],
+                      "userDef2" => options[:user_def_2],
+                      "discount" => options[:discount],
+                      "receivableAccount" => options[:receivable_account],
+                      "upload" => options[:upload],
+                      "address" => options[:address],
+                      "shippingAddresses" => options[:shipping_addresses],
+                      "paymentTerms" => options[:payment_terms],
+                      "createdBy" => options[:created_by],
+                      "modifiedBy" => options[:modified_by])
       end
     end
 
@@ -189,24 +188,24 @@ module Spire
         status: status || ACTIVE,
         backgroundColor: background_color || 16777215,
         address: address || {},
-        createdBy: created_by || '',
+        createdBy: created_by || "",
         modifiedBy: modified_by,
         hold: hold || false,
         applyFinanceCharges: apply_finance_charges || false,
         foregroundColor: foreground_color || 00000000,
         creditType: credit_type || 2,
-        creditLimit: credit_limit || '0',
-        creditBalance: credit_balance || '0',
-        currency: currency || 'CAD',
-        defaultShipTo: default_ship_to || '',
-        receivableAccount: receivable_account || '11210',
+        creditLimit: credit_limit || "0",
+        creditBalance: credit_balance || "0",
+        currency: currency || "CAD",
+        defaultShipTo: default_ship_to || "",
+        receivableAccount: receivable_account || "11210",
         upload: upload || false,
-        reference: reference || '',
-        userDef1: user_def_1 || '',
-        userDef2: user_def_2 || '',
-        discount: discount || '0',
+        reference: reference || "",
+        userDef1: user_def_1 || "",
+        userDef2: user_def_2 || "",
+        discount: discount || "0",
         paymentTerms: payment_terms || {},
-        shippingAddresses: shipping_addresses || []
+        shippingAddresses: shipping_addresses || [],
       }
 
       if customer_no.present?
@@ -234,7 +233,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/customers/#{id}", payload)
     end

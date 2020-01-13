@@ -1,27 +1,27 @@
 module Spire
   # A PaymentMethod is a method of payment.
- 
+
   class PaymentMethod < BasicData
     register_attributes :id, :code, :description, :accountNo, :payment_type, :display, :sequence,
-                        :created, :created_by, :modified, :modified_by,
+      :created, :created_by, :modified, :modified_by,
       readonly: [
-        :id, :created_by, :modified_by
+        :id, :created_by, :modified_by,
       ]
 
     validates_presence_of :id
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      code: 'code',
-      description: 'description',
-      account_no: 'accountNo',
-      payment_type: 'paymentType',
-      display: 'display',
-      sequence: 'sequence',
-      created: 'created',
-      created_by: 'createdBy',
-      modified: 'modified',
-      modified_by: 'modifiedBy'
+      id: "id",
+      code: "code",
+      description: "description",
+      account_no: "accountNo",
+      payment_type: "paymentType",
+      display: "display",
+      sequence: "sequence",
+      created: "created",
+      created_by: "createdBy",
+      modified: "modified",
+      modified_by: "modifiedBy",
     }
 
     class << self
@@ -31,7 +31,7 @@ module Spire
       #
       # @return [Spire::PaymentMethod]
       def find(id, params = {})
-        client.find('/payment_methods', id, params)
+        client.find("/payment_methods", id, params)
       end
 
       # Search for payment methods by query
@@ -40,7 +40,7 @@ module Spire
       #
       # @return [Spire::PaymentMethod]
       def search(query)
-        client.find_many(Spire::PaymentMethod, '/payment_methods/', {q: query})
+        client.find_many(Spire::PaymentMethod, "/payment_methods/", { q: query })
       end
 
       # Search for all payment methods
@@ -49,9 +49,8 @@ module Spire
       #
       # @return [Spire::PaymentMethod]
       def all(limit)
-        client.get('/payment_methods/', {limit: limit})
+        client.get("/payment_methods/", { limit: limit })
       end
-
 
       # Create a new payment methods and save it on Spire.
       #
@@ -63,18 +62,17 @@ module Spire
       # @return [Spire::PaymentMethod]
       def create(options)
         client.create(:payment_method,
-          'id' => options[:id],
-          'code' => options[:code],
-          'description' => options[:description],
-          'accountNo' => options[:account_no],
-          'paymentType' => options[:payment_type],
-          'display' => options[:display],
-          'sequence' => options[:sequence],
-          'created' => options[:created],
-          'createdBy' => options[:created_by],
-          'modified' => options[:modified],
-          'modifiedBy' => options[:modified_by]
-        )
+                      "id" => options[:id],
+                      "code" => options[:code],
+                      "description" => options[:description],
+                      "accountNo" => options[:account_no],
+                      "paymentType" => options[:payment_type],
+                      "display" => options[:display],
+                      "sequence" => options[:sequence],
+                      "created" => options[:created],
+                      "createdBy" => options[:created_by],
+                      "modified" => options[:modified],
+                      "modifiedBy" => options[:modified_by])
       end
     end
 
@@ -120,7 +118,7 @@ module Spire
         accountNo: account_no,
         paymentType: payment_type,
         display: display,
-        sequence: sequence
+        sequence: sequence,
       }
 
       from_response client.post("/payment_methods/", options)
@@ -140,7 +138,8 @@ module Spire
       @previously_changed = changes
       # extract only new values to build payload
       payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
-      @changed_attributes.clear
+
+      clear_changes
 
       client.put("/payment_methods/#{id}", payload)
     end

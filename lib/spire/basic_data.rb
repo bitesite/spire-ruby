@@ -1,4 +1,4 @@
-require 'active_support/inflector'
+require "active_support/inflector"
 
 module Spire
   class BasicData
@@ -38,16 +38,17 @@ module Spire
         # Defines the attribute getter and setters.
         class_eval do
           define_method :attributes do
-            @attributes ||= names.reduce({}) { |hash, k| hash.merge(k.to_sym => nil) }
+            # custom instance variable to prevent Dirty to use ActiveModel::AttributeMutationTracker
+            @_attributes ||= names.reduce({}) { |hash, k| hash.merge(k.to_sym => nil) }
           end
 
           names.each do |key|
-            define_method(:"#{key}") { @attributes[key] }
+            define_method(:"#{key}") { @_attributes[key] }
 
             unless options[:readonly].include?(key.to_sym)
               define_method :"#{key}=" do |val|
-                send(:"#{key}_will_change!") unless val == @attributes[key]
-                @attributes[key] = val
+                send(:"#{key}_will_change!") unless val == @_attributes[key]
+                @_attributes[key] = val
               end
             end
           end
@@ -60,9 +61,9 @@ module Spire
         class_eval do
           define_method(:"#{name}") do |*args|
             options = opts.dup
-            klass   = options.delete(:via) || Spire.const_get(name.to_s.camelize)
-            ident   = options.delete(:using) || :id
-            path    = options.delete(:path)
+            klass = options.delete(:via) || Spire.const_get(name.to_s.camelize)
+            ident = options.delete(:using) || :id
+            path = options.delete(:path)
 
             if path
               client.find(path, self.send(ident))
@@ -76,11 +77,11 @@ module Spire
       def many(name, opts = {})
         class_eval do
           define_method(:"#{name}") do |*args|
-            options   = opts.dup
-            resource  = options.delete(:in)  || self.class.to_s.split("::").last.downcase.pluralize
-            klass     = options.delete(:via) || Spire.const_get(name.to_s.singularize.camelize)
+            options = opts.dup
+            resource = options.delete(:in) || self.class.to_s.split("::").last.downcase.pluralize
+            klass = options.delete(:via) || Spire.const_get(name.to_s.singularize.camelize)
             path = options.delete(:path) || name
-            params    = options.merge(args[0] || {})
+            params = options.merge(args[0] || {})
 
             resources = client.find_many(klass, "/#{resource}/#{id}/#{path}", params)
             MultiAssociation.new(self, resources).proxy
@@ -93,7 +94,7 @@ module Spire
       end
     end
 
-    register_attributes :id, readonly: [ :id ]
+    register_attributes :id, readonly: [:id]
 
     def initialize(fields = {})
       update_fields(fields)
@@ -116,5 +117,12 @@ module Spire
     def client
       @client ||= self.class.client
     end
+
+    private
+
+      def clear_changes
+        @changed_attributes.clear if @changed_attributes.respond_to?(:clear)
+        changes_applied if respond_to?(:changes_applied)
+      end
   end
 end
