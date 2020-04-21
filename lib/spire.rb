@@ -35,6 +35,7 @@ module Spire
   autoload :BasicData,      'spire/basic_data'
   autoload :JsonUtils,      'spire/json_utils'
   autoload :Order,          'spire/order'
+  autoload :Invoice,        'spire/invoice'
   autoload :Upc,            'spire/upc'
 
   module Authorization

@@ -107,6 +107,8 @@ module Spire
           Spire.const_get('Item')
         elsif path_or_class == '/sales/orders'
           Spire.const_get('Order')
+        elsif path_or_class == '/sales/invoices'
+          Spire.const_get('Invoice')
         elsif path_or_class == '/inventory/upcs'
           Spire.const_get('Upc')
         else
