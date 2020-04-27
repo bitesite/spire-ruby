@@ -12,13 +12,33 @@ RSpec.describe Spire::Item do
   end
 
   describe 'search' do
-    it 'calls client.find_many' do
+    it 'calls client.find_many with default limit of 10' do
       allow(Spire::BasicData.client).to receive(:find_many)
       Spire::Item.search("af-1")
 
       expect(Spire::BasicData.client).to have_received(
         :find_many
-      ).with(Spire::Item, '/inventory/items/', {q: "af-1"})
+      ).with(Spire::Item, '/inventory/items/', {q: "af-1", limit: 10})
+    end
+
+    it 'calls client.find_many with a custom limit' do
+      allow(Spire::BasicData.client).to receive(:find_many)
+      Spire::Item.search("af-1", 1000)
+
+      expect(Spire::BasicData.client).to have_received(
+        :find_many
+      ).with(Spire::Item, '/inventory/items/', {q: "af-1", limit: 1000})
+    end
+  end
+
+  describe 'filter' do
+    it 'calls client.find_many' do
+      allow(Spire::BasicData.client).to receive(:find_many)
+      Spire::Item.filter('{"partNo":"ABCD-0001"}')
+
+      expect(Spire::BasicData.client).to have_received(
+        :find_many
+      ).with(Spire::Item, '/inventory/items/', {filter: '{"partNo":"ABCD-0001"}'})
     end
   end
 
