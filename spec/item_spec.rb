@@ -18,7 +18,7 @@ RSpec.describe Spire::Item do
 
       expect(Spire::BasicData.client).to have_received(
         :find_many
-      ).with(Spire::Item, '/inventory/items/', {q: "af-1", limit: 10})
+      ).with(Spire::Item, '/inventory/items/', {q: "af-1"})
     end
 
     it 'calls client.find_many with a custom limit' do
