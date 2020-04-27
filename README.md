@@ -51,7 +51,7 @@ Will search Spire for an item that matches the given query
 Spire::Item.search('GF-1234')
 ```
 
-Will retrieve many UPCs based on a filter from Spire
+Will retrieve many Items based on a filter from Spire
 ```ruby
 Spire::Item.filter('{"partNo":"ABCD-0001", "whse":"00"}')
 ```
