@@ -210,8 +210,17 @@ module Spire
       # @raise [Spire::Error] if the item could not be found.
       #
       # @return [Spire::Item]
-      def search(query)
-        client.find_many(Spire::Item, "/inventory/items/", { q: query })
+      def search(query, limit = 10)
+        client.find_many(Spire::Item, "/inventory/items/", { q: query, limit: limit })
+      end
+
+      # Find items through a filter. This will even return inactive spire items!
+      #
+      # @raise [Spire::Error] if the item could not be found.
+      #
+      # @ return [Spire::Item]
+      def filter(filter)
+        client.find_many(Spire::Item, "/inventory/items/", { filter: filter })
       end
 
       # Create a new item and save it on Spire.

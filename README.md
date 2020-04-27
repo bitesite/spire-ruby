@@ -51,6 +51,11 @@ Will search Spire for an item that matches the given query
 Spire::Item.search('GF-1234')
 ```
 
+Will retrieve many UPCs based on a filter from Spire
+```ruby
+Spire::Item.filter('{"partNo":"ABCD-0001", "whse":"00"}')
+```
+
 Will create a new item on Spire
 ```ruby
 Spire::Item.create(options)
@@ -124,7 +129,7 @@ Will search Spire for any order that match the given query
 Spire::Order.search('casey.li@bitesite.ca')
 ```
 
-Will create order in Spire   
+Will create order in Spire
 ```ruby
 Spire::Order.create({
   'customer' => {'id': 'customer id'},
