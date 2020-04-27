@@ -12,7 +12,7 @@ RSpec.describe Spire::Item do
   end
 
   describe 'search' do
-    it 'calls client.find_many with default limit of 10' do
+    it 'calls client.find_many' do
       allow(Spire::BasicData.client).to receive(:find_many)
       Spire::Item.search("af-1")
 
