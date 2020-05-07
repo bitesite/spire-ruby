@@ -61,14 +61,19 @@ module Spire
   #   @return [String]
   # @!attribute [r] modified_by
   #   @return [String]
+  # @!attribute [r] deleted_by
+  #   @return [String]
+  # @!attribute [r] delete
+  #   @return [String]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
-      :modified_by, :created, :modified, :background_color,
+      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted,
       readonly: [
-        :created_by, :modified_by, :created, :modified, :order_no,
+        :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
+        :deleted,
       ]
 
     validates_presence_of :id, :customer, :address, :shipping_address, :items
@@ -113,6 +118,8 @@ module Spire
       created: "created",
       modified: "modified",
       background_color: "backgroundColor",
+      deleted_by: "deletedBy",
+      deleted: "deleted",
     }
 
     class << self
