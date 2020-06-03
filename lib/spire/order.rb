@@ -169,6 +169,7 @@ module Spire
           "type" => options[:type],
           "contact" => options[:contact],
           "payments" => options[:payments],
+          "shippingCarrier" => options[:shipping_carrier]
         )
       end
     end
@@ -245,6 +246,7 @@ module Spire
         contact: contact || {},
         status: status || OPEN,
         backgroundColor: background_color || 16777215,
+        shippingCarrier: shipping_carrier || ""
       }
 
       from_response client.post("/sales/orders/", options)
