@@ -63,7 +63,7 @@ module Spire
   #   @return [String]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
-      :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
+      :order_date, :address, :shipping_carrier ,:shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color,
@@ -91,6 +91,7 @@ module Spire
       hold: "hold",
       order_date: "orderDate",
       address: "address",
+      shipping_carrier: "shippingCarrier",
       shipping_address: "shippingAddress",
       customer_po: "customerPO",
       fob: "fob",
