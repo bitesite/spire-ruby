@@ -65,12 +65,14 @@ module Spire
   #   @return [String]
   # @!attribute [r] delete
   #   @return [String]
+  # @!attribute [rw] salesperson
+  #   @return [Hash]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
-      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted,
+      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :salesperson,
       readonly: [
         :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
         :deleted,
@@ -120,6 +122,7 @@ module Spire
       background_color: "backgroundColor",
       deleted_by: "deletedBy",
       deleted: "deleted",
+      salesperson: "salesperson",
     }
 
     class << self
@@ -175,6 +178,7 @@ module Spire
           "type" => options[:type],
           "contact" => options[:contact],
           "payments" => options[:payments],
+          "salesperson" => options[:salesperson],
         )
       end
     end
@@ -197,6 +201,7 @@ module Spire
     # @option fields [Hash] :address This is the Billing Address for the customer
     # @option fields [Hash] :shipping_address This is the shipping address, if none provided it will default to the billing address
     # @option fields [String] :customer_po
+    # @option fields [Hash] :salesperson { code: "" }
     # @option fields [String] :fob
     # @option fields [String] :terms_code
     # @option fields [String] :terms_text
@@ -244,6 +249,7 @@ module Spire
         discount: discount || "0",
         freight: freight || "",
         customerPO: customer_po || "",
+        salesperson: salesperson || {},
         type: type || "O",
         termsCode: terms_code || "",
         hold: hold || ACTIVE,
