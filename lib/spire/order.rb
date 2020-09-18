@@ -65,12 +65,14 @@ module Spire
   #   @return [String]
   # @!attribute [r] delete
   #   @return [String]
+  # @!attribute [rw] udf
+  #   @return [Hash]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
-      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted,
+      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
       readonly: [
         :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
         :deleted,
@@ -120,6 +122,7 @@ module Spire
       background_color: "backgroundColor",
       deleted_by: "deletedBy",
       deleted: "deleted",
+      udf: "udf",
     }
 
     class << self
@@ -156,6 +159,7 @@ module Spire
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
       # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
       # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
+      # @option options [Hash] :udf, this is a hash for the user defined fields created by a user:  "udf" : { "ready_to_ship":"YES", "credit_card_charged": "NO", ... }
 
       # @raise [Spire::Error] if the order could not be created.
       #
@@ -175,6 +179,7 @@ module Spire
           "type" => options[:type],
           "contact" => options[:contact],
           "payments" => options[:payments],
+          "udf" => options[:udf],
         )
       end
     end
@@ -214,8 +219,9 @@ module Spire
     # @option fields [String] :gross_profit
     # @option fields [Array] :items This will be an array of hashes, where if inventory is null and a comment option is provided, it will create a "Comment" on the order instead of a line item
     # @option fields [String] :background_color - the sync color that we use in spire
-    #options fields [Array] :payments - accepts simple payment method code id, which denotes payment type, used for marking payment deposited.
+    # @option fields [Array] :payments - accepts simple payment method code id, which denotes payment type, used for marking payment deposited.
     # @option fields [Hash] :contact
+    # @option fields [Hash] :udf
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
       self.attributes.each do |k, v|
@@ -251,6 +257,7 @@ module Spire
         contact: contact || {},
         status: status || OPEN,
         backgroundColor: background_color || 16777215,
+        udf: udf || {},
       }
 
       from_response client.post("/sales/orders/", options)
