@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "spire/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "spire-ruby"
+  spec.name          = "spire"
   spec.version       = Spire::VERSION
   spec.authors       = ["Ryan O'Connor", "Casey Li", "Jack Wu", "Chris Francis", "Denis Dujota"]
   spec.email         = ["ryan.oconnor@bitesite.ca"]
