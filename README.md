@@ -11,7 +11,7 @@ Additionaly, we want to say thanks to [International Safety Inc.](https://www.in
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'spire'
+gem 'spire-ruby'
 ```
 
 And then execute:
@@ -20,7 +20,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install spire
+    $ gem install spire-ruby
 
 ## Usage
 
@@ -180,6 +180,16 @@ Spire::Vendor.find(vendorId)
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
+
+## Publishing
+
+**Note '2.4.1' is being used as an example below, your version will be different.**
+
+1. Ensure version number is updated
+2. Tag `git tag 'v2.4.1'
+3. Push tags to GitHub `git push origin --tags`
+4. Build the gem `gem build spire.gemspec`
+5. Publish to BiteSite's RubyGems account `gem push spire-ruby-2.4.1.gem`
 
 ## Contributing
 
