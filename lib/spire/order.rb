@@ -69,12 +69,14 @@ module Spire
   #   @return [String]
   # @!attribute [rw] tracking_no
   #   @return [String]
+  # @!attribute [rw] udf
+  #   @return [Hash]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
       :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
-      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted,
+      :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
       :shipping_carrier, :tracking_no,
       readonly: [
         :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
@@ -127,6 +129,7 @@ module Spire
       deleted: "deleted",
       shipping_carrier: "shippingCarrier",
       tracking_no: "trackingNo",
+      udf: "udf",
     }
 
     class << self
@@ -165,6 +168,7 @@ module Spire
       # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
       # @option options [String] :shipping_carrier, this carrier used to ship the order
       # @option options [String] :tracking_no, the tracking number associated with the order shipment
+      # @option options [Hash] :udf, this is a hash for the user defined fields created by a user:  "udf" : { "ready_to_ship":"YES", "credit_card_charged": "NO", ... }
 
       # @raise [Spire::Error] if the order could not be created.
       #
@@ -185,7 +189,8 @@ module Spire
           "contact" => options[:contact],
           "payments" => options[:payments],
           "shippingCarrier" => options[:shipping_carrier],
-          "trackingNo" => options[:tracking_no]
+          "trackingNo" => options[:tracking_no],
+          "udf" => options[:udf]
         )
       end
     end
@@ -229,6 +234,7 @@ module Spire
     # @option fields [Hash] :contact
     # @option fields [String] :shipping_carrier
     # @option fields [String] :tracking_no
+    # @option fields [Hash] :udf
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
       self.attributes.each do |k, v|
@@ -266,6 +272,7 @@ module Spire
         trackingNo: tracking_no,
         status: status || OPEN,
         backgroundColor: background_color || 16777215,
+        udf: udf || {},
       }
 
       from_response client.post("/sales/orders/", options)
