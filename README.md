@@ -195,7 +195,9 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 
 After trying to publish to rubygems.org, we realized we had a name conflict. If we changed the name of the gem, 
 that would also affect the code that requires the top-level package. Until we're willing to release a Major version
-upgrade with breaking changes, we'll just have to publish via GitHub. When we're ready to release a new version:
+upgrade with breaking changes, we'll just have to publish via GitHub. 
+
+Until then, when we're ready to release a new version:
 
 1. On master, `git checkout master`
 2. Make sure you have the latest changes `git pull`
