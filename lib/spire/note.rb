@@ -106,7 +106,7 @@ module Spire
         options = { q: query }
         options[:limit] = limit if limit
 
-        client.find_many(Spire::Note, ROOT_PATH, options)
+        client.find_many(Spire::Note, "#{ROOT_PATH}/", options)
       end
 
       # Find notes through a filter.
@@ -115,7 +115,7 @@ module Spire
       #
       # @ return [Spire::Note]
       def filter(filter)
-        client.find_many(Spire::Note, ROOT_PATH, { filter: filter })
+        client.find_many(Spire::Note, "#{ROOT_PATH}/", { filter: filter })
       end
 
       # Create a new item and save it on Spire.
@@ -179,7 +179,7 @@ module Spire
         alert: alert || false,
       }
 
-      from_response client.post(ROOT_PATH, payload)
+      from_response client.post("#{ROOT_PATH}/", payload)
     end
 
     # Update an existing record.
