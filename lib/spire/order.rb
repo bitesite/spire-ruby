@@ -65,6 +65,10 @@ module Spire
   #   @return [String]
   # @!attribute [r] delete
   #   @return [String]
+  # @!attribute [rw] shipping_carrier
+  #   @return [String]
+  # @!attribute [rw] tracking_no
+  #   @return [String]
   # @!attribute [rw] udf
   #   @return [Hash]
   class Order < BasicData
@@ -73,6 +77,7 @@ module Spire
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
+      :shipping_carrier, :tracking_no,
       readonly: [
         :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
         :deleted,
@@ -122,6 +127,8 @@ module Spire
       background_color: "backgroundColor",
       deleted_by: "deletedBy",
       deleted: "deleted",
+      shipping_carrier: "shippingCarrier",
+      tracking_no: "trackingNo",
       udf: "udf",
     }
 
@@ -159,6 +166,8 @@ module Spire
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
       # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
       # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
+      # @option options [String] :shipping_carrier, this carrier used to ship the order
+      # @option options [String] :tracking_no, the tracking number associated with the order shipment
       # @option options [Hash] :udf, this is a hash for the user defined fields created by a user:  "udf" : { "ready_to_ship":"YES", "credit_card_charged": "NO", ... }
 
       # @raise [Spire::Error] if the order could not be created.
@@ -179,7 +188,9 @@ module Spire
           "type" => options[:type],
           "contact" => options[:contact],
           "payments" => options[:payments],
-          "udf" => options[:udf],
+          "shippingCarrier" => options[:shipping_carrier],
+          "trackingNo" => options[:tracking_no],
+          "udf" => options[:udf]
         )
       end
     end
@@ -193,7 +204,7 @@ module Spire
     # this method to assign attributes, call `save` or `update!` afterwards if
     # you want to persist your changes to Spire.
     #
-    #@param [Hash] fields
+    # @param [Hash] fields
     # @option fields [Hash] :customer The customer object that we will pass to spire
     # @option fields [String] :status
     # @option fields [String] :type
@@ -210,9 +221,9 @@ module Spire
     # @option fields [String] :subototal
     # @option fields [String] :subtotal_ordered
     # @option fields [String] :discount
-    # @option options [String] :freight
-    # @option options [String] :customerPO
-    # @option options [String] :type
+    # @option fields [String] :freight
+    # @option fields [String] :customerPO
+    # @option fields [String] :type
     # @option fields [String] :total_discount
     # @option fields [String] :total
     # @option fields [String] :total_ordered
@@ -221,6 +232,8 @@ module Spire
     # @option fields [String] :background_color - the sync color that we use in spire
     # @option fields [Array] :payments - accepts simple payment method code id, which denotes payment type, used for marking payment deposited.
     # @option fields [Hash] :contact
+    # @option fields [String] :shipping_carrier
+    # @option fields [String] :tracking_no
     # @option fields [Hash] :udf
     def update_fields(fields)
       # instead of going through each attribute on self, iterate through each item in field and update from there
@@ -255,6 +268,8 @@ module Spire
         hold: hold || ACTIVE,
         payments: payments || [],
         contact: contact || {},
+        shippingCarrier: shipping_carrier,
+        trackingNo: tracking_no,
         status: status || OPEN,
         backgroundColor: background_color || 16777215,
         udf: udf || {},
@@ -266,7 +281,7 @@ module Spire
     # Update an existing record.
     #
     # Warning: this updates all fields using values already in memory. If
-    # an external resource has updated these fields, you should refresh wuth update fields mehtod!
+    # an external resource has updated these fields, you should refresh with update fields method!
     # this object before making your changes, and before updating the record.
     #
     # @raise [Spire::Error] if the order could not be updated.

@@ -11,3 +11,6 @@
 .rspec_status
 
 coverage
+
+# built gems
+*.gem

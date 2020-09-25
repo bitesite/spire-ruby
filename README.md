@@ -4,14 +4,14 @@ Spire is a Ruby wrapper around the [Spire Systems API](http://www.spiresystems.c
 This gem was inspired by [ruby-trello](https://github.com/jeremytregunna/ruby-trello).
 If you like this gem, definitely go and check it out.
 
-Additionaly, we want to say thanks to [International Safety Inc.](https://www.internationalsafety.com/) for sponsoring the development of this gem.
+Additionaly, we want to say thanks to [International Safety Inc.](https://www.internationalsafety.com/) for sponsoring a lof of the development of this gem.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'spire'
+gem 'spire', git: "https://github.com/bitesite/spire-ruby", branch: "master"
 ```
 
 And then execute:
@@ -180,6 +180,18 @@ Spire::Vendor.find(vendorId)
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
+
+## Publishing
+
+**Note '2.4.1' is being used as an example below, your version will be different.**
+
+**This will NOT work until we come up with a non-conflicting name**
+
+1. Ensure version number is updated
+2. Tag `git tag 'v2.4.1'
+3. Push tags to GitHub `git push origin --tags`
+4. Build the gem `gem build spire.gemspec`
+5. Publish to BiteSite's RubyGems account `gem push spire-2.4.1.gem`
 
 ## Contributing
 

@@ -7,6 +7,10 @@ module Spire
   #   @return [String]
   # @!attribute [r] order_no
   #   @return [String]
+  # @!attribute [r] shipping_carrier
+  #   @return [String]
+  # @!attribute [r] tracking_no
+  #   @return [String]
   # @!attribute [r] created
   #   @return [String]
   # @!attribute [r] modified
@@ -16,7 +20,8 @@ module Spire
   # @!attribute [r] modified_by
   #   @return [String]
   class Invoice < BasicData
-    register_attributes :id, :invoice_no, :order_no, 
+    register_attributes :id, :invoice_no, :order_no,
+      :shipping_carrier, :tracking_no,
       :created_by, :modified_by, :created, :modified,
       readonly: [
         :id, :invoice_no, :order_no,
@@ -29,6 +34,8 @@ module Spire
       id: "id",
       invoice_no: "invoiceNo",
       order_no: "orderNo",
+      shipping_carrier: "shippingCarrier",
+      tracking_no: "trackingNo",
       created_by: "createdBy",
       modified_by: "modifiedBy",
       created: "created",
@@ -67,6 +74,8 @@ module Spire
     # @option fields [Hash] :id
     # @option fields [String] :invoice_no
     # @option fields [String] :order_no
+    # @option fields [String] :shipping_carrier
+    # @option fields [String] :tracking_no
     # @option fields [String] :created_by
     # @option fields [String] :modified_by
     # @option fields [String] :created
