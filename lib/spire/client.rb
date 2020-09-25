@@ -111,6 +111,8 @@ module Spire
           Spire.const_get('Invoice')
         elsif path_or_class == '/inventory/upcs'
           Spire.const_get('Upc')
+        elsif path_or_class == '/crm/notes'
+          Spire.const_get('Note')
         else
           Spire.const_get(path_or_class.to_s.singularize.camelize.gsub('::', ''))
         end

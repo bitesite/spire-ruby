@@ -37,6 +37,7 @@ module Spire
   autoload :Order,          'spire/order'
   autoload :Invoice,        'spire/invoice'
   autoload :Upc,            'spire/upc'
+  autoload :Note,           'spire/note'
 
   module Authorization
     autoload :AuthPolicy,      'spire/authorization'
