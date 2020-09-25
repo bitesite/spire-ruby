@@ -8,19 +8,21 @@ Additionaly, we want to say thanks to [International Safety Inc.](https://www.in
 
 ## Installation
 
-Add this line to your application's Gemfile:
+If you want the latest, add this line to your application's Gemfile:
 
 ```ruby
 gem 'spire', git: "https://github.com/bitesite/spire-ruby", branch: "master"
 ```
 
+OR you could grab a specific version, for example 'v2.5.0':
+
+```ruby
+gem 'spire', git: "https://github.com/bitesite/spire-ruby", tag: "v2.5.0"
+```
+
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install spire
 
 ## Usage
 
