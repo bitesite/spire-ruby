@@ -183,15 +183,25 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Publishing
 
-**Note '2.4.1' is being used as an example below, your version will be different.**
+~~**Note '2.4.1' is being used as an example below, your version will be different.**~~
 
-**This will NOT work until we come up with a non-conflicting name**
+~~1. Ensure version number is updated~~
+~~2. Tag `git tag 'v2.4.1'~~
+~~3. Push tags to GitHub `git push origin --tags`~~
+~~4. Build the gem `gem build spire.gemspec`~~
+~~5. Publish to BiteSite's RubyGems account `gem push spire-2.4.1.gem`~~
 
-1. Ensure version number is updated
-2. Tag `git tag 'v2.4.1'
-3. Push tags to GitHub `git push origin --tags`
-4. Build the gem `gem build spire.gemspec`
-5. Publish to BiteSite's RubyGems account `gem push spire-2.4.1.gem`
+After trying to publish to rubygems.org, we realized we had a name conflict. If we changed the name of the gem, 
+that would also affect the code that requires the top-level package. Until we're willing to release a Major version
+upgrade with breaking changes, we'll just have to publish via GitHub. When we're ready to release a new version:
+
+1. On master, `git checkout master`
+2. Make sure you have the latest changes `git pull`
+2. Update `spire/version.rb` with a new version number following Semantic Versioning Rules.
+3. Commit the change `git add .` and `git commit -m "Updated version number for release."`
+4. Push changes `git push origin master`
+5. Tag the commit `git tag 'vX.X>X'`
+6. Push tags `git push origin --tags`
 
 ## Contributing
 
