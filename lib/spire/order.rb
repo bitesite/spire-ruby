@@ -305,6 +305,14 @@ module Spire
       client.delete("/sales/orders/#{id}")
     end
 
+    # Invoice the order
+    #
+    # @return [String] the JSON response from the Spire API
+    def invoice
+      client.post("/sales/orders/#{id}/invoice")
+    end
+    
+
     # Sets status to on hold.
     # This will not make any changes on Spire.
     # If you want to save changes to Spire call .save or .update!
