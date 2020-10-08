@@ -17,7 +17,7 @@ module Spire
               result = execute_core request
               body = result.body
 
-              if request.verb == :post
+              if request.verb == :post && result.headers[:location]
                 body = { id: result.headers[:location].split("/").last }.to_json
               end
 
