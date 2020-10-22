@@ -8,6 +8,30 @@ module Spire
     #   @return [String]
     # @!attribute [r] whse
     #   @return [String]
+    # @!attribute [r] part_no
+    #   @return [String]
+    # @!attribute [r] description
+    #   @return [String]
+    # @!attribute [r] order_date
+    #   @return [String]
+    # @!attribute [r] required_date
+    #   @return [String]
+    # @!attribute [r] required_qty
+    #   @return [String]
+    # @!attribute [r] backorder_qty
+    #   @return [String]
+    # @!attribute [r] parts_cost
+    #   @return [String]
+    # @!attribute [r] priority
+    #   @return [int]
+    # @!attribute [r] yield_expected_pct
+    #   @return [String]
+    # @!attribute [r] yield_actual_qty
+    #   @return [String]
+    # @!attribute [r] assemble_qty
+    #   @return [String]
+    # @!attribute [r] assembled_qty
+    #   @return [String]
     # @!attribute [r] created
     #   @return [String]
     # @!attribute [r] modified
@@ -20,10 +44,38 @@ module Spire
       register_attributes :id,
                           :order_no,
                           :whse,
+                          :part_no,
+                          :description,
+                          :order_date,
+                          :required_date,
+                          :required_qty,
+                          :backorder_qty,
+                          :parts_cost,
+                          :priority,
+                          :yield_expected_pct,
+                          :yield_actual_qty,
+                          :assemble_qty,
+                          :assembled_qty,
+                          :created_by,
+                          :modified_by,
+                          :created,
+                          :modified,
                           readonly: [
                             :id,
                             :order_no,
                             :whse,
+                            :part_no,
+                            :description,
+                            :order_date,
+                            :required_date,
+                            :required_qty,
+                            :backorder_qty,
+                            :parts_cost,
+                            :priority,
+                            :yield_expected_pct,
+                            :yield_actual_qty,
+                            :assemble_qty,
+                            :assembled_qty,
                             :created_by,
                             :modified_by,
                             :created,
@@ -34,6 +86,18 @@ module Spire
         id: "id",
         order_no: "orderNo",
         whse: "whse",
+        part_no: "partNo",
+        description: "description",
+        order_date: "orderDate",
+        required_date: "requiredDate",
+        required_qty: "requiredQty",
+        backorder_qty: "backorderQty",
+        parts_cost: "partsCost",
+        priority: "priority",
+        yield_expected_pct: "yieldExpectedPct",
+        yield_actual_qty: "yield_actualQty",
+        assemble_qty: "assembleQty",
+        assembled_qty: "assembledQty",
         created_by: "createdBy",
         modified_by: "modifiedBy",
         created: "created",
