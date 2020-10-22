@@ -39,6 +39,11 @@ module Spire
   autoload :Upc,            'spire/upc'
   autoload :Note,           'spire/note'
 
+  module Production
+    autoload :Order,        'spire/production/order'
+    autoload :Item,         'spire/production/item'
+  end
+
   module Authorization
     autoload :AuthPolicy,      'spire/authorization'
     autoload :BasicAuthPolicy, 'spire/authorization'

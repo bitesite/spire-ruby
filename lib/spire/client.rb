@@ -113,6 +113,10 @@ module Spire
           Spire.const_get('Upc')
         elsif path_or_class == '/crm/notes'
           Spire.const_get('Note')
+        elsif path_or_class =='/production/orders'
+          Spire.const_get('Production::Order')
+        elsif path_or_class =='/production/items'
+          Spire.const_get('Production::Item')
         else
           Spire.const_get(path_or_class.to_s.singularize.camelize.gsub('::', ''))
         end
