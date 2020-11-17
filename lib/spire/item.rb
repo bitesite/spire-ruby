@@ -205,6 +205,16 @@ module Spire
         client.find("/inventory/items", id, params)
       end
 
+      # Find many items
+      #
+      # You can pass in options like q, limit, filter and any other
+      # parameters that are supported by the Spire API
+      #
+      # @return [Spire::Item]
+      def find_many(options = {})
+        client.find_many(Spire::Item, "/inventory/items/", options)
+      end
+
       # Search for items by query. This will even return inactive items!
       #
       # @raise [Spire::Error] if the item could not be found.
