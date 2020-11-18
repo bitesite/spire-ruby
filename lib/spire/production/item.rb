@@ -75,15 +75,6 @@ module Spire
       }
 
       class << self
-        # Get all orders
-        #
-        # @raise [Spire::Error] if the order could not be found.
-        #
-        # @return [Spire::Production::Item]
-        def all
-          client.find_many(Spire::Production::Item, "/production/items/", {})
-        end
-
         # Find a specific order by its id.
         #
         # @raise [Spire::Error] if the order could not be found.
@@ -91,6 +82,16 @@ module Spire
         # @return [Spire::Production::Item]
         def find(id, params = {})
           client.find("/production/items", id, params)
+        end
+
+        # Find many items
+        #
+        # You can pass in options like q, limit, filter and any other
+        # parameters that are supported by the Spire API
+        #
+        # @return [Spire::Production::Item]
+        def find_many(options = {})
+          client.find_many(Spire::Production::Item, "/production/items/", options)
         end
 
         # Search for order by query. This will even return inactive orders!
