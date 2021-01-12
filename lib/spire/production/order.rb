@@ -6,6 +6,8 @@ module Spire
     #   @return [int]
     # @!attribute [r] order_no
     #   @return [String]
+    # @!attribute [rw] status
+    #   @return [String]
     # @!attribute [r] whse
     #   @return [String]
     # @!attribute [r] part_no
@@ -42,6 +44,7 @@ module Spire
     #   @return [String]
     class Order < BasicData
       register_attributes :id,
+                          :status,
                           :order_no,
                           :whse,
                           :part_no,
@@ -84,6 +87,7 @@ module Spire
 
       SYMBOL_TO_STRING = {
         id: "id",
+        status: "status",
         order_no: "orderNo",
         whse: "whse",
         part_no: "partNo",
