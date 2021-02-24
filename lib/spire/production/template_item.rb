@@ -35,7 +35,7 @@ module Spire
                           :created,
                           :modified,
                           :created_by,
-                          :modified_by
+                          :modified_by,
                           readonly: [
                             :id,
                             :template,
