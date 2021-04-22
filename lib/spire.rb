@@ -42,6 +42,8 @@ module Spire
   module Production
     autoload :Order,        'spire/production/order'
     autoload :Item,         'spire/production/item'
+    autoload :Template,     'spire/production/template'
+    autoload :TemplateItem, 'spire/production/template_item'
   end
 
   module Inventory
