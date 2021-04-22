@@ -111,6 +111,8 @@ module Spire
           Spire.const_get('Invoice')
         elsif path_or_class == '/inventory/upcs'
           Spire.const_get('Upc')
+        elsif path_or_class =='/inventory/groups'
+          Spire.const_get('Inventory::Group')
         elsif path_or_class == '/crm/notes'
           Spire.const_get('Note')
         elsif path_or_class =='/production/orders'
