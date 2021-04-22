@@ -44,6 +44,10 @@ module Spire
     autoload :Item,         'spire/production/item'
   end
 
+  module Inventory
+    autoload :Group,        'spire/inventory/group'
+  end
+
   module Authorization
     autoload :AuthPolicy,      'spire/authorization'
     autoload :BasicAuthPolicy, 'spire/authorization'
