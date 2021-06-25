@@ -1,4 +1,5 @@
 # Spire
+
 Spire is a Ruby wrapper around the [Spire Systems API](http://www.spiresystems.com/).
 
 This gem was inspired by [ruby-trello](https://github.com/jeremytregunna/ruby-trello).
@@ -22,12 +23,28 @@ gem 'spire', git: "https://github.com/bitesite/spire-ruby", tag: "v2.5.0"
 
 And then execute:
 
-    $ bundle
+```shell
+$ bundle
+```
 
 ## Usage
 
 First you will need to configure spire. This is a global configuration. Thus it will be applied anywhere you use spire within
 your application.
+
+### Rails
+
+There are 2 options to configure your rails project to use this gem.
+
+**Automated Rails Generator**
+
+Run the following command in your projects root folder.
+
+```shell
+$ rails generate spire:install
+```
+
+**Manual**
 
 If you are using spire within a Rails application, you could put the following config in an initializer.
 
@@ -41,34 +58,41 @@ end
 ```
 
 ### Items
+
 Below are a few usage examples. For other uses, please refer to `lib/item.rb`.
 
 Will retrieve one item from Spire
+
 ```ruby
 Spire::Item.find(itemId)
 ```
 
 Will search Spire for an item that matches the given query
+
 ```ruby
 Spire::Item.search('GF-1234')
 ```
 
 Will retrieve many Items based on a filter from Spire
+
 ```ruby
 Spire::Item.filter('{"partNo":"ABCD-0001", "whse":"00"}')
 ```
 
 Will create a new item on Spire
+
 ```ruby
 Spire::Item.create(options)
 ```
 
 Will delete an item from Spire
+
 ```ruby
 Spire::Item.find(itemId).delete
 ```
 
 Updates item description on Spire
+
 ```ruby
 item = Spire::Item.find(71)
 item.description = 'This is a new description'
@@ -76,29 +100,35 @@ item.save
 ```
 
 ### UPCs
+
 Below are a few usage examples. For other uses, please refer to `lib/upc.rb`.
 
 Will retrieve many UPCs based on a filter from Spire
+
 ```ruby
 Spire::Upc.filter('{"partNo":"ABCD-0001", "whse":"00"}')
 ```
 
 Will retrieve one UPC from Spire
+
 ```ruby
 Spire::Upc.find(upcId)
 ```
 
 Will create a new UPC on Spire
+
 ```ruby
 Spire::Upc.create(upc: "12345678901", uomCode: "EA", inventory: {id: 1})
 ```
 
 Will delete a UPC from Spire
+
 ```ruby
 Spire::Upc.find(upcId).delete
 ```
 
 Updates a UPC on Spire
+
 ```ruby
 upc = Spire::Upc.find(1)
 upc.upc = '12345678902'
@@ -106,32 +136,39 @@ upc.save
 ```
 
 ### Customers
+
 Below are a few usage examples. For other uses, please refer to `lib/customer.rb`.
 
 Will retrieve one customer from Spire
+
 ```ruby
 Spire::Customer.find(customerId)
 ```
 
 Will search Spire for a customer that matches the given query
+
 ```ruby
 Spire::Customer.search('casey.li@bitesite.ca')
 ```
 
 ### Orders
+
 The syntax for orders is very similar to items. For additional information please refer to `lib/order.rb`.
 
 Will retrieve one order from Spire
+
 ```ruby
 Spire::Order.find(orderId)
 ```
 
 Will search Spire for any order that match the given query
+
 ```ruby
 Spire::Order.search('casey.li@bitesite.ca')
 ```
 
 Will create order in Spire
+
 ```ruby
 Spire::Order.create({
   'customer' => {'id': 'customer id'},
@@ -167,12 +204,15 @@ Spire::Order.create({
   'freight': '14'
 })
 ```
-*Above is the minimum param to create an order in Spire*
+
+_Above is the minimum param to create an order in Spire_
 
 ### Vendors
+
 The syntax for vendors is very similar to items. For additional information please refer to `lib/vendor.rb`.
 
 Will retrieve one vendor from Spire
+
 ```ruby
 Spire::Vendor.find(vendorId)
 ```
@@ -193,23 +233,23 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 4. ~~Build the gem `gem build spire.gemspec`~~
 5. ~~Publish to BiteSite's RubyGems account `gem push spire-2.4.1.gem`~~
 
-After trying to publish to rubygems.org, we realized we had a name conflict. If we changed the name of the gem, 
+After trying to publish to rubygems.org, we realized we had a name conflict. If we changed the name of the gem,
 that would also affect the code that requires the top-level package. Until we're willing to release a Major version
-upgrade with breaking changes, we'll just have to publish via GitHub. 
+upgrade with breaking changes, we'll just have to publish via GitHub.
 
 Until then, when we're ready to release a new version:
 
 1. On master, `git checkout master`
 2. Make sure you have the latest changes `git pull`
-2. Update `spire/version.rb` with a new version number following Semantic Versioning Rules.
-3. Commit the change `git add .` and `git commit -m "Updated version number for release."`
-4. Push changes `git push origin master`
-5. Tag the commit `git tag 'vX.X.X'`
-6. Push tags `git push origin --tags`
+3. Update `spire/version.rb` with a new version number following Semantic Versioning Rules.
+4. Commit the change `git add .` and `git commit -m "Updated version number for release."`
+5. Push changes `git push origin master`
+6. Tag the commit `git tag 'vX.X.X'`
+7. Push tags `git push origin --tags`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/bitesite/spire.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bitesite/spire-ruby.
 
 We do not currently support the entire [Spire](http://www.spiresystems.com/) api.
 Any pull requests adding CRUD resources to this gem are appreciated.
