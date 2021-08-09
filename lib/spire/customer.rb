@@ -111,6 +111,15 @@ module Spire
         client.find_many(Spire::Customer, "/customers/", { q: query })
       end
 
+      # Find customers by filter.
+      #
+      # @raise [Spire::Error] if the item could not be found.
+      #
+      # @ return [Spire::Customer]
+      def filter(filter)
+        client.find_many(Spire::Customer, "/customers/", { filter: filter })
+      end
+
       # Create a new customer and save it on Spire.
       #
       # @param [Hash] options
