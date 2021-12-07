@@ -4,17 +4,17 @@ module Spire
     #
     # @!attribute [r] id
     #   @return [int]
-    # @!attribute [r] receiptNo
+    # @!attribute [r] receipt_no
     #   @return [int]
     # @!attribute [r] inventory_id
     #   @return [int]
     # @!attribute [r] whse
     #   @return [String]
-    # @!attribute [r] partNo
+    # @!attribute [r] part_no
     #   @return [String]
-    # @!attribute [r] vendorNo
+    # @!attribute [r] vendor_no
     #   @return [String]
-    # @!attribute [r] vendorName
+    # @!attribute [r] vendor_name
     #   @return [String]
     # @!attribute [r] date
     #   @return [String]
@@ -22,27 +22,27 @@ module Spire
     #   @return [String]
     # @!attribute [r] quantity
     #   @return [String]
-    # @!attribute [r] stockMeasure
+    # @!attribute [r] stock_measure
     #   @return [String]
-    # @!attribute [r] receiptMeasureQty
+    # @!attribute [r] receipt_measure_qty
     #   @return [String]
-    # @!attribute [r] receiptMeasure
+    # @!attribute [r] receipt_measure
     #   @return [String]
-    # @!attribute [r] costPrice
+    # @!attribute [r] cost_price
     #   @return [String]
-    # @!attribute [r] sellPrice
+    # @!attribute [r] sell_price
     #   @return [String]
-    # @!attribute [r] linkTable
+    # @!attribute [r] link_table
     #   @return [String]
-    # @!attribute [r] linkNo
+    # @!attribute [r] link_no
     #   @return [String]
-    # @!attribute [r] linkGuid
+    # @!attribute [r] link_guid
     #   @return [String]
-    # @!attribute [r] refNo
+    # @!attribute [r] ref_no
     #   @return [String]
     # @!attribute [r] user
     #   @return [String]
-    # @!attribute [r] remainingQty
+    # @!attribute [r] remaining_qty
     #   @return [String]
     class Receipt < BasicData
       register_attributes :id,
