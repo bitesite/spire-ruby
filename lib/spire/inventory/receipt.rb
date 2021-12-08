@@ -115,9 +115,9 @@ module Spire
       }
 
       class << self
-        # Find a specific order by its id.
+        # Find a specific receipt by its id.
         #
-        # @raise [Spire::Error] if the order could not be found.
+        # @raise [Spire::Error] if the receipt could not be found.
         #
         # @return [Spire::Inventory::Receipt]
         def find(id, params = {})
@@ -134,9 +134,9 @@ module Spire
           client.find_many(Spire::Inventory::Receipt, "/inventory/receipts/", options)
         end
 
-        # Search for order by query. This will even return inactive orders!
+        # Search for receipt by query.
         #
-        # @raise [Spire::Error] if the order could not be found.
+        # @raise [Spire::Error] if the receipt could not be found.
         #
         # @return [Spire::Inventory::Receipt]
         def search(query)
@@ -144,9 +144,9 @@ module Spire
         end
       end
 
-      # Update the fields of an order.
+      # Update the fields of an receipt.
       #
-      # Supply a hash of string keyed data retrieved from the Spire API representing an order.
+      # Supply a hash of string keyed data retrieved from the Spire API representing an receipt.
       #
       # Note that this method does not save anything new to the Spire API,
       # it just assigns the input attributes to your local object. If you use
