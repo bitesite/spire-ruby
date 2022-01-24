@@ -117,6 +117,8 @@ module Spire
           Spire.const_get('Inventory::Serial')
         elsif path_or_class =='/inventory/receipts'
           Spire.const_get('Inventory::Receipt')
+        elsif path_or_class =='/inventory/warehouses'
+          Spire.const_get('Inventory::Warehouse')
         elsif path_or_class == '/crm/notes'
           Spire.const_get('Note')
         elsif path_or_class =='/production/orders'

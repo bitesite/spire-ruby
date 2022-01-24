@@ -50,6 +50,7 @@ module Spire
     autoload :Group,        'spire/inventory/group'
     autoload :Serial,       'spire/inventory/serial'
     autoload :Receipt,      'spire/inventory/receipt'
+    autoload :Warehouse,    'spire/inventory/warehouse'
   end
 
   module Authorization
