@@ -45,33 +45,16 @@ module Spire
     # @!attribute [r] modified_by
     #   @return [String]
     class Order < BasicData
-      register_attributes :id,
-                          :number,
-                          :vendor,
-                          :currency,
-                          :status,
-                          :date,
-                          :address,
-                          :shippingAddress,
-                          :vendorPO,
-                          :referenceNo,
-                          :fob,
-                          :incoterms,
-                          :incotermsPlace,
-                          :subtotal,
-                          :total,
-                          :items,
-                          :udf,
-                          :created_by,
-                          :modified_by,
-                          :created,
-                          :modified,
-                          readonly: [
-                            :created_by,
-                            :modified_by,
-                            :created,
-                            :modified
-                          ]
+      register_attributes :id, :number, :vendor, :currency, :status, :date,
+        :address, :shipping_address, :vendor_po, :reference_no, :fob,
+        :incoterms, :incoterms_place, :subtotal, :total, :items, :udf,
+        :created_by, :modified_by, :created, :modified,
+        readonly: [
+          :created_by,
+          :modified_by,
+          :created,
+          :modified,
+        ]
 
       SYMBOL_TO_STRING = {
         id: "id",
@@ -94,7 +77,7 @@ module Spire
         created_by: "createdBy",
         modified_by: "modifiedBy",
         created: "created",
-        modified: "modified"
+        modified: "modified",
       }
 
       class << self
@@ -106,6 +89,7 @@ module Spire
         def all
           client.find_many(Spire::Purchasing::Order, "/purchasing/orders/", {})
         end
+
         # Find a specific order by its id.
         #
         # @raise [Spire::Error] if the order could not be found.
@@ -131,10 +115,18 @@ module Spire
 
         def create(options)
           client.create(
-            :order,
+            "/purchasing/orders",
+            "vendor" => options[:vendor],
+            "currency" => options[:currency],
             "status" => options[:status],
+            "date" => options[:date],
             "address" => options[:address],
             "shippingAddress" => options[:shipping_address],
+            "vendorPO" => options[:vendor_po],
+            "referenceNo" => options[:reference_no],
+            "fob" => options[:fob],
+            "incoterms" => options[:incoterms],
+            "incotermsPlace" => options[:incoterms_place],
             "items" => options[:items],
             "udf" => options[:udf],
           )
@@ -169,10 +161,18 @@ module Spire
         return update! if id
 
         options = {
+          vendor: vendor || {},
+          currency: currency || {},
+          status: status,
+          date: date,
           address: address || {},
           shippingAddress: shipping_address || {},
-          items: items || {},
-          status: status || OPEN,
+          vendorPO: vendor_po,
+          referenceNo: reference_no,
+          fob: fob,
+          incoterms: incoterms,
+          incotermsPlace: incoterms_place,
+          items: items || [],
           udf: udf || {},
         }
 
@@ -203,8 +203,6 @@ module Spire
       def delete
         client.delete("/purchasing/orders/#{id}")
       end
-
-      
     end
   end
 end
