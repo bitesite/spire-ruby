@@ -15,6 +15,8 @@ module Spire
   #   @return [Boolean]
   # @!attribute [rw] order_date
   #   @return [String]
+    # @!attribute [rw] required_date
+  #   @return [String]
   # @!attribute [rw] address
   #   @return [Hash]
   # @!attribute [rw] shipping_address
@@ -73,7 +75,7 @@ module Spire
   #   @return [Hash]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
-      :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
+      :order_date, :required_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
@@ -102,6 +104,7 @@ module Spire
       type: "type",
       hold: "hold",
       order_date: "orderDate",
+      required_date: "requiredDate",
       address: "address",
       shipping_address: "shippingAddress",
       customer_po: "customerPO",
@@ -190,12 +193,14 @@ module Spire
           "payments" => options[:payments],
           "shippingCarrier" => options[:shipping_carrier],
           "trackingNo" => options[:tracking_no],
-          "udf" => options[:udf]
+          "udf" => options[:udf],
+          "orderDate" => options[:order_date],
+          "requiredDate" => options[:required_date],
         }
-
-        if options[:order_no]
-          create_attributes["orderNo"] = options[:order_no]
-        end
+        
+        create_attributes["orderNo"] = options[:order_no] if options[:order_no]
+        create_attributes["orderDate"] = options[:order_date] if options[:order_date]
+        create_attributes["requiredDate"] = options[:required_date] if options[:required_date]
 
         client.create(
           :order,
@@ -219,6 +224,7 @@ module Spire
     # @option fields [String] :type
     # @option fields [Boolean] :hold
     # @option fields [String] :order_date
+    # @option fields [String] :required_date
     # @option fields [Hash] :address This is the Billing Address for the customer
     # @option fields [Hash] :shipping_address This is the shipping address, if none provided it will default to the billing address
     # @option fields [String] :customer_po
@@ -284,10 +290,10 @@ module Spire
         udf: udf || {},
       }
 
-      if order_no
-        options[:orderNo] = order_no
-      end
-
+      options[:orderNo] = order_no if order_no
+      options[:orderDate] = order_date if order_date
+      options[:requiredDate] = required_date if required_date
+      
       from_response client.post("/sales/orders/", options)
     end
 
