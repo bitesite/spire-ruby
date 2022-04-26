@@ -3,7 +3,7 @@ module Spire
   #
   # @!attribute [r] id
   #   @return [int]
-  # @!attribute [r] order_no
+  # @!attribute [rw] order_no
   #   @return [String]
   # @!attribute [rw] customer
   #   @return [Hash]
@@ -79,7 +79,7 @@ module Spire
       :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
       :shipping_carrier, :tracking_no,
       readonly: [
-        :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
+        :created_by, :modified_by, :created, :modified, :deleted_by,
         :deleted,
       ]
 
@@ -174,8 +174,8 @@ module Spire
       #
       # @return [Spire::Order]
       def create(options)
-        client.create(
-          :order,
+
+        create_attributes = {
           "customer" => options[:customer],
           "status" => options[:status],
           "termsCode" => options[:terms_code],
@@ -191,6 +191,15 @@ module Spire
           "shippingCarrier" => options[:shipping_carrier],
           "trackingNo" => options[:tracking_no],
           "udf" => options[:udf]
+        }
+
+        if options[:order_no]
+          create_attributes["orderNo"] = options[:order_no]
+        end
+
+        client.create(
+          :order,
+          create_attributes
         )
       end
     end
@@ -274,6 +283,10 @@ module Spire
         backgroundColor: background_color || 16777215,
         udf: udf || {},
       }
+
+      if order_no
+        options[:orderNo] = order_no
+      end
 
       from_response client.post("/sales/orders/", options)
     end
