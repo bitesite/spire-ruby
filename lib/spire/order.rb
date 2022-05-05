@@ -29,6 +29,8 @@ module Spire
   #   @return [String]
   # @!attribute [rw] terms_text
   #   @return [String]
+  # @!attribute [rw] reference_no
+  #   @return [String]
   # @!attribute [rw] freight
   #   @return [String]
   # @!attribute [rw] taxes
@@ -75,7 +77,7 @@ module Spire
   #   @return [Hash]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
-      :order_date, :required_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
+      :order_date, :required_date, :address, :shipping_address, :customer_po, :reference_no, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
@@ -109,6 +111,7 @@ module Spire
       shipping_address: "shippingAddress",
       customer_po: "customerPO",
       fob: "fob",
+      reference_no: "referenceNo",
       terms_code: "termsCode",
       terms_text: "termsText",
       freight: "freight",
@@ -166,6 +169,7 @@ module Spire
       # @option options [String] :terms_code used to prepare the order for the deposit by marking the order with the appropriate pre-payment method used
       # @option options [String] :freight this is the shipping cost for that order
       # @option options [String] :customerPO this is the purchase order number for internal use
+      # @option options [String] :reference_no this is the reference number for the order
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
       # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
       # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
@@ -188,6 +192,7 @@ module Spire
           "discount" => options[:discount],
           "freight" => options[:freight],
           "customerPO" => options[:customer_po],
+          "referenceNo" => options[:reference_no],
           "type" => options[:type],
           "contact" => options[:contact],
           "payments" => options[:payments],
@@ -228,6 +233,7 @@ module Spire
     # @option fields [Hash] :address This is the Billing Address for the customer
     # @option fields [Hash] :shipping_address This is the shipping address, if none provided it will default to the billing address
     # @option fields [String] :customer_po
+    # @option fields [String] :reference_no
     # @option fields [String] :fob
     # @option fields [String] :terms_code
     # @option fields [String] :terms_text
@@ -278,6 +284,7 @@ module Spire
         discount: discount || "0",
         freight: freight || "",
         customerPO: customer_po || "",
+        referenceNo: reference_no || "",
         type: type || "O",
         termsCode: terms_code || "",
         hold: hold || ACTIVE,
