@@ -48,11 +48,18 @@ module Spire
 
   module Inventory
     autoload :Group,        'spire/inventory/group'
+    autoload :Serial,       'spire/inventory/serial'
+    autoload :Receipt,      'spire/inventory/receipt'
+    autoload :Warehouse,    'spire/inventory/warehouse'
   end
 
   module Authorization
     autoload :AuthPolicy,      'spire/authorization'
     autoload :BasicAuthPolicy, 'spire/authorization'
+  end
+
+  module Purchasing
+    autoload :Order,        'spire/purchasing/order'
   end
 
   API_VERSION = 2

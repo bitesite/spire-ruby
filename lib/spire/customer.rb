@@ -45,6 +45,8 @@ module Spire
   #   @return [Hash]
   # @!attribute [rw] payment_terms
   #   @return [Hash]
+  # @!attribute [rw] udf
+  #   @return [Hash]
   # @!attribute [r] created_by
   #   @return [String]
   # @!attribute [r] modified_by
@@ -54,7 +56,7 @@ module Spire
     register_attributes :id, :name, :customer_no, :code, :hold, :status, :reference, :apply_finance_charges,
       :foreground_color, :background_color, :credit_type, :credit_limit, :credit_balance,
       :currency, :default_ship_to, :user_def_1, :user_def_2, :discount, :receivable_account,
-      :upload, :address, :shipping_addresses, :payment_terms, :created_by, :modified_by,
+      :upload, :address, :shipping_addresses, :payment_terms, :created_by, :modified_by, :udf,
       readonly: [
         :id, :created_by, :modified_by,
       ]
@@ -85,6 +87,7 @@ module Spire
       address: "address",
       shipping_addresses: "shippingAddresses",
       payment_terms: "paymentTerms",
+      udf: "udf",
       created_by: "createdBy",
       modified_by: "modifiedBy",
     }
@@ -109,6 +112,15 @@ module Spire
       # @return [Spire::Customer]
       def search(query)
         client.find_many(Spire::Customer, "/customers/", { q: query })
+      end
+
+      # Find customers by filter.
+      #
+      # @raise [Spire::Error] if the item could not be found.
+      #
+      # @ return [Spire::Customer]
+      def filter(filter)
+        client.find_many(Spire::Customer, "/customers/", { filter: filter })
       end
 
       # Create a new customer and save it on Spire.
@@ -143,6 +155,7 @@ module Spire
                       "address" => options[:address],
                       "shippingAddresses" => options[:shipping_addresses],
                       "paymentTerms" => options[:payment_terms],
+                      "udf" => options[:udf],
                       "createdBy" => options[:created_by],
                       "modifiedBy" => options[:modified_by])
       end
@@ -206,6 +219,7 @@ module Spire
         discount: discount || "0",
         paymentTerms: payment_terms || {},
         shippingAddresses: shipping_addresses || [],
+        udf: udf || {},
       }
 
       if customer_no.present?

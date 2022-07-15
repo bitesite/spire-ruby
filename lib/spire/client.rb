@@ -113,6 +113,12 @@ module Spire
           Spire.const_get('Upc')
         elsif path_or_class =='/inventory/groups'
           Spire.const_get('Inventory::Group')
+        elsif path_or_class =='/inventory/serials'
+          Spire.const_get('Inventory::Serial')
+        elsif path_or_class =='/inventory/receipts'
+          Spire.const_get('Inventory::Receipt')
+        elsif path_or_class =='/inventory/warehouses'
+          Spire.const_get('Inventory::Warehouse')
         elsif path_or_class == '/crm/notes'
           Spire.const_get('Note')
         elsif path_or_class =='/production/orders'
@@ -123,6 +129,8 @@ module Spire
           Spire.const_get('Production::Template')
         elsif path_or_class =='/production/template_items'
           Spire.const_get('Production::TemplateItem')
+        elsif path_or_class =='/purchasing/orders'
+          Spire.const_get('Purchasing::Order')
         else
           Spire.const_get(path_or_class.to_s.singularize.camelize.gsub('::', ''))
         end

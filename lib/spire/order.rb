@@ -3,7 +3,7 @@ module Spire
   #
   # @!attribute [r] id
   #   @return [int]
-  # @!attribute [r] order_no
+  # @!attribute [rw] order_no
   #   @return [String]
   # @!attribute [rw] customer
   #   @return [Hash]
@@ -14,6 +14,8 @@ module Spire
   # @!attribute [rw] hold
   #   @return [Boolean]
   # @!attribute [rw] order_date
+  #   @return [String]
+    # @!attribute [rw] required_date
   #   @return [String]
   # @!attribute [rw] address
   #   @return [Hash]
@@ -26,6 +28,8 @@ module Spire
   # @!attribute [rw] terms_code
   #   @return [String]
   # @!attribute [rw] terms_text
+  #   @return [String]
+  # @!attribute [rw] reference_no
   #   @return [String]
   # @!attribute [rw] freight
   #   @return [String]
@@ -73,13 +77,13 @@ module Spire
   #   @return [Hash]
   class Order < BasicData
     register_attributes :id, :order_no, :customer, :status, :type, :hold,
-      :order_date, :address, :shipping_address, :customer_po, :fob, :terms_code,
+      :order_date, :required_date, :address, :shipping_address, :customer_po, :reference_no, :fob, :terms_code,
       :terms_text, :freight, :taxes, :subtotal, :subtotal_ordered, :discount,
       :total_discount, :total, :total_ordered, :gross_profit, :items, :payments, :contact, :created_by,
       :modified_by, :created, :modified, :background_color, :deleted_by, :deleted, :udf,
       :shipping_carrier, :tracking_no,
       readonly: [
-        :created_by, :modified_by, :created, :modified, :order_no, :deleted_by,
+        :created_by, :modified_by, :created, :modified, :deleted_by,
         :deleted,
       ]
 
@@ -102,10 +106,12 @@ module Spire
       type: "type",
       hold: "hold",
       order_date: "orderDate",
+      required_date: "requiredDate",
       address: "address",
       shipping_address: "shippingAddress",
       customer_po: "customerPO",
       fob: "fob",
+      reference_no: "referenceNo",
       terms_code: "termsCode",
       terms_text: "termsText",
       freight: "freight",
@@ -163,6 +169,7 @@ module Spire
       # @option options [String] :terms_code used to prepare the order for the deposit by marking the order with the appropriate pre-payment method used
       # @option options [String] :freight this is the shipping cost for that order
       # @option options [String] :customerPO this is the purchase order number for internal use
+      # @option options [String] :reference_no this is the reference number for the order
       # @option options [String] :type this is used to distinguish between it is an order ("O") or quote ("Q")
       # @option options [Array] :payments, specifies the payment type by customer for a deposit "payments" : [{"method" : 2 }]
       # @option options [Hash] :contact, this is a hash for a customer's contact:  "contact" : { "phone":{"number":"123", "format":2}, "name":"John Doe", "email":"jd@example.com" }
@@ -174,8 +181,8 @@ module Spire
       #
       # @return [Spire::Order]
       def create(options)
-        client.create(
-          :order,
+
+        create_attributes = {
           "customer" => options[:customer],
           "status" => options[:status],
           "termsCode" => options[:terms_code],
@@ -185,12 +192,24 @@ module Spire
           "discount" => options[:discount],
           "freight" => options[:freight],
           "customerPO" => options[:customer_po],
+          "referenceNo" => options[:reference_no],
           "type" => options[:type],
           "contact" => options[:contact],
           "payments" => options[:payments],
           "shippingCarrier" => options[:shipping_carrier],
           "trackingNo" => options[:tracking_no],
-          "udf" => options[:udf]
+          "udf" => options[:udf],
+          "orderDate" => options[:order_date],
+          "requiredDate" => options[:required_date],
+        }
+        
+        create_attributes["orderNo"] = options[:order_no] if options[:order_no]
+        create_attributes["orderDate"] = options[:order_date] if options[:order_date]
+        create_attributes["requiredDate"] = options[:required_date] if options[:required_date]
+
+        client.create(
+          :order,
+          create_attributes
         )
       end
     end
@@ -210,9 +229,11 @@ module Spire
     # @option fields [String] :type
     # @option fields [Boolean] :hold
     # @option fields [String] :order_date
+    # @option fields [String] :required_date
     # @option fields [Hash] :address This is the Billing Address for the customer
     # @option fields [Hash] :shipping_address This is the shipping address, if none provided it will default to the billing address
     # @option fields [String] :customer_po
+    # @option fields [String] :reference_no
     # @option fields [String] :fob
     # @option fields [String] :terms_code
     # @option fields [String] :terms_text
@@ -263,6 +284,7 @@ module Spire
         discount: discount || "0",
         freight: freight || "",
         customerPO: customer_po || "",
+        referenceNo: reference_no || "",
         type: type || "O",
         termsCode: terms_code || "",
         hold: hold || ACTIVE,
@@ -275,6 +297,10 @@ module Spire
         udf: udf || {},
       }
 
+      options[:orderNo] = order_no if order_no
+      options[:orderDate] = order_date if order_date
+      options[:requiredDate] = required_date if required_date
+      
       from_response client.post("/sales/orders/", options)
     end
 
