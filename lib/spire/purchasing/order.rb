@@ -203,6 +203,12 @@ module Spire
       def delete
         client.delete("/purchasing/orders/#{id}")
       end
+
+      # Issue this order
+      # @return [String] the JSON response from the Spire API
+      def issue
+        client.post("/purchasing/orders/#{id}/issue")
+      end
     end
   end
 end
