@@ -198,6 +198,26 @@ module Spire
         self
       end
 
+      # Update an existing record.
+      #
+      # Warning: this updates all fields using values already in memory. If
+      # an external resource has updated these fields, you should refresh with update fields method!
+      # this object before making your changes, and before updating the record.
+      #
+      # @raise [Spire::Error] if the order could not be updated.
+      #
+      # @return [String] The JSON representation of the updated order returned by
+      # the Spire API.
+      def update!
+        @previously_changed = changes
+        # extract only new values to build payload
+        payload = Hash[changes.map { |key, values| [SYMBOL_TO_STRING[key.to_sym].to_sym, values[1]] }]
+
+        clear_changes
+
+        client.put("/purchasing/orders/#{id}", payload)
+      end
+
       # Delete this order
       # @return [String] the JSON response from the Spire API
       def delete
@@ -208,6 +228,11 @@ module Spire
       # @return [String] the JSON response from the Spire API
       def issue
         client.post("/purchasing/orders/#{id}/issue")
+      end
+
+      # Receive the items in this order
+      def receive
+        client.post("/purchasing/orders/#{id}/receive")
       end
     end
   end
