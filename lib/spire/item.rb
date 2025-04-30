@@ -111,6 +111,8 @@ module Spire
   #   @return [String]
   # @!attribute [r] modified
   #   @return [String]
+  # @!attribute [r] udf
+  #   @return [String]
 
   class Item < BasicData
     register_attributes :id, :whse, :part_no, :description, :type, :status,
@@ -124,7 +126,7 @@ module Spire
       :harmonized_code, :extended_description, :unit_of_measures, :pricing,
       :images, :default_expiry_date, :lot_consume_type, :upload, :last_modified,
       :created_by, :modified_by, :created, :modified, :available_qty, :on_hand_qty,
-      :committed_qty, :backorder_qty, :on_purchase_qty,
+      :committed_qty, :backorder_qty, :on_purchase_qty, :udf,
       readonly: [
         :last_modified, :created_by, :modified_by, :created, :modified,
         :available_qty, :on_hand_qty, :committed_qty, :backorder_qty,
@@ -193,6 +195,7 @@ module Spire
       modified_by: "modifiedBy",
       created: "created",
       modified: "modified",
+      udf: "udf",
     }
 
     class << self
@@ -221,7 +224,6 @@ module Spire
       #
       # @return [Spire::Item]
       def search(query, limit = nil)
-
         options = { q: query }
         options[:limit] = limit if limit
 
@@ -284,6 +286,7 @@ module Spire
       # @option options [DateTime] :default_expiry_date
       # @option options [String] :lot_consume_type
       # @option options [boolean] :upload
+      # @option options [Hash] :udf
       #
       # @raise [Spire::Error] if the item could not be created.
       #
@@ -333,7 +336,8 @@ module Spire
                       "images" => options[:images],
                       "defaultExpiryDate" => options[:default_expiry_date],
                       "lotConsumeType" => options[:lot_consume_type],
-                      "upload" => options[:upload])
+                      "upload" => options[:upload],
+                      "udf" => options[:udf])
       end
     end
 
@@ -392,6 +396,7 @@ module Spire
     # @option fields [DateTime] :default_expiry_date
     # @option fields [String] :lot_consume_type
     # @option fields [boolean] :upload
+    # @option fields [Hash] :udf
     #
     # @return [Spire::Item] self
     def update_fields(fields)
@@ -459,6 +464,7 @@ module Spire
         defaultExpiryDate: default_expiry_date,
         lotConsumeType: lot_consume_type || 0,
         upload: upload || false,
+        udf: udf || {},
       }
 
       # primaryVendor can't be any value if not present
