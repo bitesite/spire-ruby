@@ -38,6 +38,7 @@ Spire.configure do |config|
   config.username = 'username' # Username of a user account within "company name"
   config.password = 'xxxxxxxx' # Password of that user
   config.host = 'example.com' # Location of your Spire server
+  config.port = '443' # Port to use, common is 443 for https communication
 end
 ```
 
