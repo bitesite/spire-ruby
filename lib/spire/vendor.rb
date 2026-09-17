@@ -84,6 +84,16 @@ module Spire
         client.find("/vendors", id, params)
       end
 
+      # Find many Vendors
+      #
+      # You can pass in options like q, limit, filter and any other
+      # parameters that are supported by the Spire API
+      #
+      # @return [Spire::Inventory::Serial]
+      def find_many(options = {})
+        client.find_many(Spire::Vendor, "/vendors/", options)
+      end
+
       # Search for vendors by query.
       #
       # @raise [Spire::Error] if the vendor could not be found.
