@@ -62,6 +62,10 @@ module Spire
     autoload :Order,        'spire/purchasing/order'
   end
 
+  module AR
+    autoload :Transaction,  'spire/ar/transaction'
+  end
+
   API_VERSION = 2
 
   # This error is thrown when your client has not been configured

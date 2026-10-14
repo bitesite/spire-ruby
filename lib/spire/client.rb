@@ -131,6 +131,8 @@ module Spire
           Spire.const_get('Production::TemplateItem')
         elsif path_or_class =='/purchasing/orders'
           Spire.const_get('Purchasing::Order')
+        elsif path_or_class =='/ar/transactions'
+          Spire.const_get('AR::Transaction')
         else
           Spire.const_get(path_or_class.to_s.singularize.camelize.gsub('::', ''))
         end
